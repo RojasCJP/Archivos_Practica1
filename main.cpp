@@ -14,9 +14,18 @@ int main()
     cin >> estatura;
     cout << "ingrese su nombre" << endl;
     cin >> nombre;
-
-    cout << "Hola " + nombre + " tu estatura es " + to_string(estatura) + " y tu edad es " + to_string(edad) << endl;
+    yo.setEdad(edad);
+    yo.setNombre(nombre);
+    yo.setEstatura(estatura);
     yo.mostrar();
+
+    if(yo.getestatura() >2){
+        cout<<"usted es demasiado alto"<<endl;
+    }else if (yo.getestatura()<1){
+        cout<<"usted es un enano"<<endl;
+    }else{
+        cout<<"usted tiene una estatura normal"<<endl;
+    }
     return 0;
 }
 
