@@ -1,31 +1,26 @@
 #include <iostream>
 #include "extras/presentacion.h"
+#include "analizadores/parser.h"
+#include "analizadores/scanner.h"
 using namespace std;
+
+void leerEntrada(string entrada);
 
 int main()
 {
-    Persona yo = Persona("Juan", 21,1.68);
-    int edad;
-    double estatura;
-    string nombre;
-    cout << "ingrese su edad" << endl;
-    cin >> edad;
-    cout << "ingrese su estatura" << endl;
-    cin >> estatura;
-    cout << "ingrese su nombre" << endl;
-    cin >> nombre;
-    yo.setEdad(edad);
-    yo.setNombre(nombre);
-    yo.setEstatura(estatura);
-    yo.mostrar();
-
-    if(yo.getestatura() >2){
-        cout<<"usted es demasiado alto"<<endl;
-    }else if (yo.getestatura()<1){
-        cout<<"usted es un enano"<<endl;
-    }else{
-        cout<<"usted tiene una estatura normal"<<endl;
-    }
+    leerEntrada("mkdisk -size = 300");
     return 0;
 }
 
+void leerEntrada(string entrada){
+    // cout << "       leyendo--" << entrada  << endl;
+    YY_BUFFER_STATE buffer = yy_scan_string(entrada.c_str());
+    cout<<entrada<<endl;
+    if (yyparse() == 0)
+    {
+        cout<<"jalo"<<endl;
+
+    }else{
+        cout << "!!! ocurrio un error al leer !! \n";
+    }
+}

@@ -8,8 +8,6 @@
     using namespace std;
 %}
 
-%option c++
-%option outfile="Scanner.cpp"
 %option case-insensitive
 %option noyywrap
 
@@ -55,7 +53,7 @@ FIT         "-f"
 UNITS       "-u"
 PATH        "-path"
 TYPE        "-type"
-DELETE      "-delete"
+DELET      "-delete"
 NAME        "-name"
 ADD         "-add"
 ID          "-id"
@@ -131,31 +129,31 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {PATH} {return(path);}
 {TYPE} {return(type);}
 {NAME} {return(name);}
-{DELETE} {return(delete);}
+{DELET} {return(delet);}
 {ADD} {return(add);}
 {ID} {return(id);}
 {FORMAT} {}
 
 {PATH1} {strcpy(yylval.text, yytext); return(e_path);}
 {PATH2} {strcpy(yylval.text, yytext); return(e_path);}
-{BF} {sscanf(yytext, "%s", yylval.entrace); return(e_fit);}
-{FF} {sscanf(yytext, "%s", yylval.entrace); return(e_fit);}
-{WF} {sscanf(yytext, "%s", yylval.entrace); return(e_fit);}
-{KILOBY} {sscanf(yytext, "%s", yylval.entrace); return(e_units);}
-{MEGBY} {sscanf(yytext, "%s", yylval.entrace); return(e_units);}
-{BYTE} {sscanf(yytext, "%s", yylval.entrace); return(e_units);}
-{E_E} {sscanf(yytext, "%s", yylval.entrace); return(e_type);}
-{E_P} {sscanf(yytext, "%s", yylval.entrace); return(e_type);}
-{E_L} {sscanf(yytext, "%s", yylval.entrace); return(e_type);}
-{FAST} {sscanf(yytext, "%s", yylval.entrace); return(e_delete);}
-{FULL} {sscanf(yytext, "%s", yylval.entrace); return(e_delete);}
+{BF} {sscanf(yytext, "%s", yylval.entrance); return(e_fit);}
+{FF} {sscanf(yytext, "%s", yylval.entrance); return(e_fit);}
+{WF} {sscanf(yytext, "%s", yylval.entrance); return(e_fit);}
+{KILOBY} {sscanf(yytext, "%s", yylval.entrance); return(e_units);}
+{MEGBY} {sscanf(yytext, "%s", yylval.entrance); return(e_units);}
+{BYTE} {sscanf(yytext, "%s", yylval.entrance); return(e_units);}
+{E_E} {sscanf(yytext, "%s", yylval.entrance); return(e_type);}
+{E_P} {sscanf(yytext, "%s", yylval.entrance); return(e_type);}
+{E_L} {sscanf(yytext, "%s", yylval.entrance); return(e_type);}
+{FAST} {sscanf(yytext, "%s", yylval.entrance); return(e_delet);}
+{FULL} {sscanf(yytext, "%s", yylval.entrance); return(e_delet);}
 {NAME1} {strcpy(yylval.text, yytext); return(e_name);}
 {NAME2} {strcpy(yylval.text, yytext); return(e_name);}
 {IDES} {strcpy(yylval.text, yytext); return(e_id);}
 
 {DELIMITADOR} {}
-{COMENTARIO} {trcpy(yylval.text, yytext); return(comentario);)}// creo que este lo voy a tener que poner como delimitador porque el comentario no hace nada
+{COMENTARIO} {strcpy(yylval.text, yytext); return(comentario);}// creo que este lo voy a tener que poner como delimitador porque el comentario no hace nada
 {IGUAL} {return(igual);}
-. {printf("caracter no admitido\n", yytext);}
+.               {printf("Caracter %s no admitido\n ", yytext);}
 
 %%
