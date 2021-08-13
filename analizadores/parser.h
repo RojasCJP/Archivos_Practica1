@@ -58,26 +58,53 @@ extern int yydebug;
     mount = 264,
     unmount = 265,
     mkfs = 266,
-    size = 267,
-    fit = 268,
-    units = 269,
-    igual = 270,
-    path = 271,
-    type = 272,
-    name = 273,
-    add = 274,
-    id = 275,
-    delet = 276,
-    format = 277,
-    readfile = 278,
-    number = 279,
-    e_path = 280,
-    e_name = 281,
-    e_fit = 282,
-    e_units = 283,
-    e_type = 284,
-    e_delet = 285,
-    e_id = 286
+    chmod = 267,
+    touch = 268,
+    cat = 269,
+    rm = 270,
+    edit = 271,
+    ren = 272,
+    mkdir = 273,
+    cp = 274,
+    mv = 275,
+    size = 276,
+    fit = 277,
+    units = 278,
+    igual = 279,
+    grp = 280,
+    ugo = 281,
+    recursive = 282,
+    cont = 283,
+    stdin = 284,
+    filen = 285,
+    pp = 286,
+    dest = 287,
+    path = 288,
+    type = 289,
+    name = 290,
+    add = 291,
+    id = 292,
+    delet = 293,
+    format = 294,
+    readfile = 295,
+    fs = 296,
+    number = 297,
+    e_path = 298,
+    e_name = 299,
+    password = 300,
+    e_fit = 301,
+    e_units = 302,
+    e_type = 303,
+    e_delet = 304,
+    e_id = 305,
+    login = 306,
+    logout = 307,
+    pass = 308,
+    usr = 309,
+    mkgrp = 310,
+    rmgrp = 311,
+    mkusr = 312,
+    rmusr = 313
   };
 #endif
 
@@ -85,14 +112,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 53 "bison.y"
+#line 81 "bison.y"
 
     int number;
     char text[200];
     char entrance[12];
     int other;
 
-#line 96 "parser.h"
+#line 123 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

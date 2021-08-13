@@ -25,6 +25,7 @@ FDISK       "fdisk"
 MOUNT       "mount"
 UNMOUNT     "unmount"
 MKFS        "mkfs"
+RM          "rm"
 
 LOGIN       "login"
 LOGOUT      "logout"
@@ -53,11 +54,21 @@ FIT         "-f"
 UNITS       "-u"
 PATH        "-path"
 TYPE        "-type"
-DELET      "-delete"
+DELET       "-delete"
 NAME        "-name"
 ADD         "-add"
+USER        "-usr"
+PASS        "-pwd"
 ID          "-id"
 FORMAT      "-fs"
+GROUP       "-grp"
+RECURSIVE   "-r"
+UGO         "-ugo"
+CONT        "-cont"
+STDIN       "-stdin"
+FILEN       "-filen"
+PP          "-p"
+DEST        "-dest"
 
 BF          "bf"
 FF          "ff"
@@ -74,6 +85,7 @@ PATH1       {SLASH}{SEMIROUTE}+{NAME_FILE}
 PATH2       \"{SLASH}({IDENTIFICADOR}|{ENTERO}|{SLASH}|" ")+{NAME_FILE}\"
 NAME1       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*
 NAME2       \"{IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO}|" ")*\"
+PASSWORD    ({IDENTIFICADOR}|{ENTERO})+
 IDES        {ENTERO}[a-z]{1,2}
 
 IGUAL       "="
@@ -102,26 +114,28 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {MOUNT} {return(mount);}
 {UNMOUNT} {return(unmount);}
 {MKFS} {return(mkfs);}
+{RM} {return(rm);}
 
-{LOGIN} {printf("login %s",yytext);}
-{LOGOUT} {printf("logout %s",yytext);}
-{MKGRP} {printf("mkgrp %s",yytext);}
-{RMGRP} {printf("rmgrp %s",yytext);}
-{MKURS} {printf("mkurs %s",yytext);}
-{RMUSR} {printf("rmusr %s",yytext);}
+{LOGIN} {return(login);}
+{LOGOUT} {return(logout);}
+{MKGRP} {return(mkgrp);}
+{RMGRP} {return(rmgrp);}
+{MKURS} {return(mkurs);}
+{RMUSR} {return(rmusr);}
+{TOUCH} {return(touch)}
 
-{CHMOD} {printf("chmod %s",yytext);}
-{MKFILE} {printf("mkfile %s",yytext);}
-{CAT} {printf("cat %s",yytext);}
-{REM} {printf("rem %s",yytext);}
-{EDIT} {printf("edit %s",yytext);}
-{REN} {printf("ren %s",yytext);} 
-{MKDIR} {printf("mkdir %s",yytext);} 
-{CP} {printf("cp %s",yytext);} 
-{MV} {printf("mv %s",yytext);} 
-{FIND} {printf("find %s",yytext);} 
-{CHOWN} {printf("chown %s",yytext);} 
-{CHGRP} {printf("chgrp %s",yytext);} 
+{CHMOD} {return(chmod);}
+{MKFILE} {return(mkfile);}
+{CAT} {return(cat);}
+{REM} {return(rem);}
+{EDIT} {return(edit);}
+{REN} {return(ren);} 
+{MKDIR} {return(mkdir);} 
+{CP} {return(cp);} 
+{MV} {return(mv);} 
+{FIND} {return(find);} 
+{CHOWN} {return(chown);} 
+{CHGRP} {return(chgrp);} 
 
 {SIZE} {return(size);}
 {FIT} {return(fit);}
@@ -131,8 +145,18 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {NAME} {return(name);}
 {DELET} {return(delet);}
 {ADD} {return(add);}
+{USER} {return(usr);}
+{PASS} {return(pass);}
 {ID} {return(id);}
-{FORMAT} {}
+{GROUP} {return(grp);}
+{FORMAT} {return(fs);}
+{RECURSIVE} {return(recursive);}
+{UGO} {return(ugo);}
+{CONT} {return(cont);}
+{STDIN} {return(stdin);}
+{FILEN} {return(filen);}
+{PP} {return(pp);}
+{DEST} {return(dest);}
 
 {PATH1} {strcpy(yylval.text, yytext); return(e_path);}
 {PATH2} {strcpy(yylval.text, yytext); return(e_path);}
@@ -150,6 +174,7 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {NAME1} {strcpy(yylval.text, yytext); return(e_name);}
 {NAME2} {strcpy(yylval.text, yytext); return(e_name);}
 {IDES} {strcpy(yylval.text, yytext); return(e_id);}
+{PASSWORD} {strcpy(yylval.text, yytext); return(password);}
 
 {DELIMITADOR} {}
 {COMENTARIO} {strcpy(yylval.text, yytext); return(comentario);}// creo que este lo voy a tener que poner como delimitador porque el comentario no hace nada
