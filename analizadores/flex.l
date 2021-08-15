@@ -31,7 +31,7 @@ LOGIN       "login"
 LOGOUT      "logout"
 MKGRP       "mkgrp"
 RMGRP       "rmgrp"
-MKURS       "mkurs"
+MKUSR       "mkusr"
 RMUSR       "rmusr"
 
 CHMOD       "chmod"
@@ -70,6 +70,10 @@ FILEN       "-filen"
 PP          "-p"
 DEST        "-dest"
 
+IGUAL       "="
+SLASH       "/"
+SEMIROUTE   {IDENTIFICADOR}({IDENTIFICADOR}|{DIGITO})*{SLASH}
+
 BF          "bf"
 FF          "ff"
 WF          "wf"
@@ -83,14 +87,11 @@ FAST        "fast"
 FULL        "full"
 PATH1       {SLASH}{SEMIROUTE}+{NAME_FILE}
 PATH2       \"{SLASH}({IDENTIFICADOR}|{ENTERO}|{SLASH}|" ")+{NAME_FILE}\"
+PASSWORD    ({IDENTIFICADOR}|{ENTERO})+
 NAME1       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*
 NAME2       \"{IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO}|" ")*\"
-PASSWORD    ({IDENTIFICADOR}|{ENTERO})+
 IDES        {ENTERO}[a-z]{1,2}
 
-IGUAL       "="
-SLASH       "/"
-SEMIROUTE   {IDENTIFICADOR}({IDENTIFICADOR}|{DIGITO})*{SLASH}
 
 DISK_EXTENTION1 "dk"
 DISK_EXTENTION2 "disk"
@@ -120,9 +121,9 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {LOGOUT} {return(logout);}
 {MKGRP} {return(mkgrp);}
 {RMGRP} {return(rmgrp);}
-{MKURS} {return(mkurs);}
+{MKUSR} {return(mkusr);}
 {RMUSR} {return(rmusr);}
-{TOUCH} {return(touch)}
+{TOUCH} {return(touch);}
 
 {CHMOD} {return(chmod);}
 {MKFILE} {return(mkfile);}
@@ -133,8 +134,8 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {MKDIR} {return(mkdir);} 
 {CP} {return(cp);} 
 {MV} {return(mv);} 
-{FIND} {return(find);} 
-{CHOWN} {return(chown);} 
+{FIND} {return(findd);} 
+{CHOWN} {return(chownn);} 
 {CHGRP} {return(chgrp);} 
 
 {SIZE} {return(size);}
@@ -153,7 +154,7 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {RECURSIVE} {return(recursive);}
 {UGO} {return(ugo);}
 {CONT} {return(cont);}
-{STDIN} {return(stdin);}
+{STDIN} {return(stdinn);}
 {FILEN} {return(filen);}
 {PP} {return(pp);}
 {DEST} {return(dest);}

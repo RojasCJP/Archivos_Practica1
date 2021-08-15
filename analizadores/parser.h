@@ -64,47 +64,52 @@ extern int yydebug;
     rm = 270,
     edit = 271,
     ren = 272,
-    mkdir = 273,
-    cp = 274,
-    mv = 275,
-    size = 276,
-    fit = 277,
-    units = 278,
-    igual = 279,
-    grp = 280,
-    ugo = 281,
-    recursive = 282,
-    cont = 283,
-    stdin = 284,
-    filen = 285,
-    pp = 286,
-    dest = 287,
-    path = 288,
-    type = 289,
-    name = 290,
-    add = 291,
-    id = 292,
-    delet = 293,
-    format = 294,
-    readfile = 295,
-    fs = 296,
-    number = 297,
-    e_path = 298,
-    e_name = 299,
-    password = 300,
-    e_fit = 301,
-    e_units = 302,
-    e_type = 303,
-    e_delet = 304,
-    e_id = 305,
-    login = 306,
-    logout = 307,
-    pass = 308,
-    usr = 309,
-    mkgrp = 310,
-    rmgrp = 311,
-    mkusr = 312,
-    rmusr = 313
+    rem = 273,
+    findd = 274,
+    mkdir = 275,
+    cp = 276,
+    mv = 277,
+    mkfile = 278,
+    chownn = 279,
+    chgrp = 280,
+    size = 281,
+    fit = 282,
+    units = 283,
+    igual = 284,
+    grp = 285,
+    ugo = 286,
+    recursive = 287,
+    cont = 288,
+    stdinn = 289,
+    filen = 290,
+    pp = 291,
+    dest = 292,
+    path = 293,
+    type = 294,
+    name = 295,
+    add = 296,
+    id = 297,
+    delet = 298,
+    format = 299,
+    readfile = 300,
+    fs = 301,
+    number = 302,
+    e_path = 303,
+    password = 304,
+    e_fit = 305,
+    e_units = 306,
+    e_type = 307,
+    e_delet = 308,
+    e_name = 309,
+    e_id = 310,
+    login = 311,
+    logout = 312,
+    pass = 313,
+    usr = 314,
+    mkgrp = 315,
+    rmgrp = 316,
+    mkusr = 317,
+    rmusr = 318
   };
 #endif
 
@@ -112,14 +117,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 81 "bison.y"
+#line 92 "bison.y"
 
     int number;
     char text[200];
     char entrance[12];
     int other;
 
-#line 123 "parser.h"
+#line 128 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

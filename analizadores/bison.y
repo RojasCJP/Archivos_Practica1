@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <array>
+#include <list>
+#include <cstring>
+#define MAX_DIGITS 10
 
 using namespace std;
-
 std::array<std::string, 11> getDatos();
 void cleanEs();
 int Pause();
@@ -13,6 +15,8 @@ int yyerror(const char* msg){
         cout<< "Syntax Error" << msg << endl;
         return 0;
 }
+std::string parametros[4];
+int getIndex(string params[4]);
 %}
 
 %define parse.error verbose
@@ -32,9 +36,14 @@ int yyerror(const char* msg){
 %token <text> rm
 %token <text> edit
 %token <text> ren
+%token <text> rem
+%token <text> findd
 %token <text> mkdir
 %token <text> cp
 %token <text> mv
+%token <text> mkfile
+%token <text> chownn
+%token <text> chgrp
 %token <entrance> size
 %token <entrance> fit
 %token <entrance> units
@@ -43,7 +52,7 @@ int yyerror(const char* msg){
 %token <entrance> ugo
 %token <entrance> recursive
 %token <entrance> cont
-%token <entrance> stdin
+%token <entrance> stdinn
 %token <entrance> filen
 %token <entrance> pp
 %token <entrance> dest
@@ -59,12 +68,12 @@ int yyerror(const char* msg){
 
 %token <number> number
 %token <text> e_path
-%token <text> e_name
 %token <text> password
 %token <entrance> e_fit
 %token <entrance> e_units
 %token <entrance> e_type
 %token <entrance> e_delet
+%token <text> e_name
 %token <entrance> e_id
 
 %token <text> login
@@ -77,7 +86,9 @@ int yyerror(const char* msg){
 %token <text> mkusr
 %token <text> rmusr
 
-%start INICIO
+%type <text> PARAMMK
+
+%start START
 %union{
     int number;
     char text[200];
@@ -86,6 +97,10 @@ int yyerror(const char* msg){
 }
 
 %%
+
+START: START INICIO
+        |INICIO
+;
 
 INICIO: F_MKDISK
         |F_RMDISK
@@ -110,17 +125,17 @@ INICIO: F_MKDISK
         |F_MV
 ;
 
-F_MKDISK: mkdisk PARAMSMK
+F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<endl;}
 ;
 
-PARAMSMK: PARAMMK PARAMSMK
-        |PARAMMK
+PARAMSMK: PARAMMK PARAMSMK {parametros[getIndex(parametros)]=$1;cout<<$1<<endl;}
+        |PARAMMK { parametros[getIndex(parametros)]=$1;cout<<$1<<endl;}
 ;
 
-PARAMMK: path igual e_path
-        |fit igual e_fit
-        |units igual e_units
-        |size igual number
+PARAMMK: path igual e_path {strcpy($$, $3);}
+        |fit igual e_fit {strcpy($$, $3);}
+        |units igual e_units {strcpy($$, $3);}
+        |size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, num_char);}
 ;
 
 F_RMDISK: rmdisk path igual e_path
@@ -227,7 +242,7 @@ PARAMTOUCH: path igual e_path
         |recursive
         |size igual number
         |cont igual e_path
-        |stdin
+        |stdinn
 ;
 
 F_CAT: cat filen igual e_path
@@ -245,7 +260,7 @@ PARAMSEDIT: PARAMSEDIT PARAMEDIT
 
 PARAMEDIT: path igual e_path
         |cont igual e_path
-        |stdin
+        |stdinn
 ;
 
 F_REN: ren PARAMSREN
@@ -285,3 +300,12 @@ F_MV: mv PARAMSCP
 ;
 
 %%
+
+int getIndex(string params[4]){
+        for(int i = 0 ; i<4;i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
