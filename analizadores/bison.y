@@ -17,6 +17,7 @@ int yyerror(const char* msg){
 }
 std::string parametros[4];
 int getIndex(string params[4]);
+void inicializarArreglo(string params[4]);
 %}
 
 %define parse.error verbose
@@ -125,11 +126,11 @@ INICIO: F_MKDISK
         |F_MV
 ;
 
-F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<endl;}
+F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<parametros[1]<<parametros[2]<<parametros[3]<<endl;inicializarArreglo(parametros);}
 ;
 
-PARAMSMK: PARAMMK PARAMSMK {parametros[getIndex(parametros)]=$1;cout<<$1<<endl;}
-        |PARAMMK { parametros[getIndex(parametros)]=$1;cout<<$1<<endl;}
+PARAMSMK: PARAMMK PARAMSMK {parametros[getIndex(parametros)]=$1;}
+        |PARAMMK { parametros[getIndex(parametros)]=$1;}
 ;
 
 PARAMMK: path igual e_path {strcpy($$, $3);}
@@ -308,4 +309,10 @@ int getIndex(string params[4]){
                 }
         }
         return 0;
+}
+
+void inicializarArreglo(string params[4]){
+        for(int i = 0; i<4; i++){
+                params[i] = "";
+        }
 }

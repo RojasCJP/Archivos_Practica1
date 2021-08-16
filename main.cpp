@@ -1,13 +1,19 @@
 #include <iostream>
 #include "analizadores/parser.h"
 #include "analizadores/scanner.h"
+#include "comandos/mkdisk.h"
 using namespace std;
 
 void leerEntrada(string entrada);
 
 int main()
 {
-    leerEntrada("mkdisk -size = 300");
+    Disk discoPrueba;
+    discoPrueba.spath = "/discoPrueba.disk";
+    discoPrueba.size = 10;
+    discoPrueba.unit = 1;
+    CreateDisk(discoPrueba);
+    leerEntrada("mkdisk -size = 300 -f = ff -u = k -path = /buenas/buenas/buenas.disk");
     leerEntrada("mkdisk -f = ff");
     leerEntrada("mkdisk -u = k");
     leerEntrada("mkdisk -path = /buenas/buenas/buenas.disk");
