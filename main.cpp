@@ -8,21 +8,17 @@ void leerEntrada(string entrada);
 
 int main()
 {
-    Disk discoPrueba;
-    discoPrueba.spath = "/discoPrueba.disk";
-    discoPrueba.size = 10;
-    discoPrueba.unit = 1;
-    CreateDisk(discoPrueba);
+    // Disk discoPrueba;
+    // discoPrueba.spath = "/discoPrueba.disk";
+    // discoPrueba.size = 10;
+    // discoPrueba.unit = 1;
+    string entrada[4] = {"300", "ff", "k", "/discoPrueba1.disk"};
+    RemoveDisk("/discoPrueba1.disk");
+    CreateDisk(diskConstructor(entrada));
     leerEntrada("mkdisk -size = 300 -f = ff -u = k -path = /buenas/buenas/buenas.disk");
     leerEntrada("mkdisk -f = ff");
     leerEntrada("mkdisk -u = k");
     leerEntrada("mkdisk -path = /buenas/buenas/buenas.disk");
-    string prueba[4];
-    prueba[0] = "hola";
-    prueba[1] = "que";
-    prueba[2] = "tal";
-    prueba[3] = "<3";
-    cout << prueba[0] << endl;
 
     return 0;
 }

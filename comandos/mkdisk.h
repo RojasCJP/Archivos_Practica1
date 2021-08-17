@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <ctime>
+#include <ctype.h>
 using namespace std;
 
 struct Partition
@@ -44,6 +45,7 @@ void CreateDisk(Disk disk)
     if (file != NULL)
     {
         cout << "El disco que desea crear ya existe" << endl;
+        cout << "se encuentra en la ubicacion " << completePath << endl;
         return;
     }
     int tamano;
@@ -84,4 +86,86 @@ void CreateDisk(Disk disk)
     fseek(file, 0, SEEK_SET);
     fwrite(&mbr, sizeof(MBR), 1, file);
     fclose(file);
+}
+
+void RemoveDisk(string subpath)
+{
+    string subpathlower = subpath;
+    for (int i = 0; i < subpath.length(); i++)
+    {
+        subpathlower[i] = tolower(subpath[i]);
+    }
+    string fullPath = rpath + subpathlower;
+
+    FILE *file = NULL;
+    file = fopen(fullPath.c_str(), "r");
+    if (file != NULL)
+    {
+        remove(fullPath.c_str());
+        system("pause");
+        cout << "se completo la eliminacion" << fullPath << endl;
+    }
+    else
+    {
+        cout << "el archivo no existe" << fullPath << endl;
+    }
+}
+
+Disk diskConstructor(string datosEntrada[4])
+{
+    string path;
+    int size;
+    int unit;
+    int fit;
+    string datos[4];
+    //fit 1 = > bf 2 = > ff 3 = > wf
+
+    for (int i = 0; i < 4; i++)
+    {
+        datos[i] = datosEntrada[i];
+        for (int j = 0; j < datosEntrada[i].length(); j++)
+        {
+            datos[i][j] = tolower(datosEntrada[i][j]);
+        }
+        cout << datos[i] << endl;
+        if (datos[i][0] == '/' || datos[i][0] == '"')
+        {
+            path = datos[i];
+        }
+        else if (datos[i][0] == '0' || datos[i][0] == '1' || datos[i][0] == '2' || datos[i][0] == '3' || datos[i][0] == '4' || datos[i][0] == '5' || datos[i][0] == '6' || datos[i][0] == '7' || datos[i][0] == '8' || datos[i][0] == '9')
+        {
+            size = stoi(datos[i]);
+        }
+        else if (datos[i] == "ff" || datos[i] == "bf" || datos[i] == "wf")
+        {
+            if (datos[i] == "bf")
+            {
+                fit = 1;
+            }
+            else if (datos[i] == "ff")
+            {
+                fit = 2;
+            }
+            else
+            {
+                fit = 3;
+            }
+        }
+        else
+        {
+            if (datos[i] == "m")
+            {
+                unit = 2;
+            }
+            else
+            {
+                unit = 1;
+            }
+        }
+    }
+    Disk discoPrueba;
+    discoPrueba.spath = path;
+    discoPrueba.size = size;
+    discoPrueba.unit = unit;
+    return discoPrueba;
 }
