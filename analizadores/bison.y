@@ -4,6 +4,7 @@
 #include <array>
 #include <list>
 #include <cstring>
+#include "../comandos/mkdisk.h"
 #define MAX_DIGITS 10
 
 using namespace std;
@@ -88,6 +89,7 @@ void inicializarArreglo(string params[4]);
 %token <text> rmusr
 
 %type <text> PARAMMK
+%type <text> PARAMMOUNT
 
 %start START
 %union{
@@ -126,7 +128,10 @@ INICIO: F_MKDISK
         |F_MV
 ;
 
-F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<parametros[1]<<parametros[2]<<parametros[3]<<endl;inicializarArreglo(parametros);}
+F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<parametros[1]<<parametros[2]<<parametros[3]<<endl;
+CreateDisk(diskConstructor(parametros));
+inicializarArreglo(parametros); 
+}
 ;
 
 PARAMSMK: PARAMMK PARAMSMK {parametros[getIndex(parametros)]=$1;}
@@ -139,7 +144,9 @@ PARAMMK: path igual e_path {strcpy($$, $3);}
         |size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, num_char);}
 ;
 
-F_RMDISK: rmdisk path igual e_path
+F_RMDISK: rmdisk path igual e_path{
+RemoveDisk($4);
+}
 ;
 
 F_FDISK: fdisk PARAMSF
@@ -159,15 +166,16 @@ PARAMF: size igual number
         |add igual number
 ;
 
-F_MOUNT: mount PARAMSMOUNT
+F_MOUNT: mount PARAMSMOUNT {Mount(getPathMount(parametros), getNameMount(parametros));
+inicializarArreglo(parametros);}
 ;
 
-PARAMSMOUNT: PARAMMOUNT PARAMSMOUNT
-        |PARAMMOUNT
+PARAMSMOUNT: PARAMMOUNT PARAMSMOUNT { parametros[getIndex(parametros)]=$1;}
+        |PARAMMOUNT { parametros[getIndex(parametros)]=$1;}
 ;
 
-PARAMMOUNT: path igual e_path
-        |name igual e_name
+PARAMMOUNT: path igual e_path {strcpy($$, $3);}
+        |name igual e_name {strcpy($$, $3);}
 ;
 
 F_UNMOUNT: unmount id igual e_id

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "analizadores/parser.h"
 #include "analizadores/scanner.h"
-#include "comandos/mkdisk.h"
+// #include "comandos/mkdisk.h"
 using namespace std;
 
 void leerEntrada(string entrada);
@@ -13,12 +13,10 @@ int main()
     // discoPrueba.size = 10;
     // discoPrueba.unit = 1;
     string entrada[4] = {"300", "ff", "k", "/discoPrueba1.disk"};
-    RemoveDisk("/discoPrueba1.disk");
-    CreateDisk(diskConstructor(entrada));
-    leerEntrada("mkdisk -size = 300 -f = ff -u = k -path = /buenas/buenas/buenas.disk");
-    leerEntrada("mkdisk -f = ff");
-    leerEntrada("mkdisk -u = k");
-    leerEntrada("mkdisk -path = /buenas/buenas/buenas.disk");
+    // RemoveDisk("/discoPrueba1.disk");
+    // CreateDisk(diskConstructor(entrada));f
+    leerEntrada("mkdisk -size = 300 -f = ff -u = k -path = /discoPrueba1.disk");
+    leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
     return 0;
 }

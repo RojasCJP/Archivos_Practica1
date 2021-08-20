@@ -85,7 +85,7 @@ E_E         "e"
 E_L         "l"
 FAST        "fast"
 FULL        "full"
-PATH1       {SLASH}{SEMIROUTE}+{NAME_FILE}
+PATH1       {SLASH}{SEMIROUTE}*{NAME_FILE}
 PATH2       \"{SLASH}({IDENTIFICADOR}|{ENTERO}|{SLASH}|" ")+{NAME_FILE}\"
 PASSWORD    ({IDENTIFICADOR}|{ENTERO})+
 NAME1       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*
@@ -154,7 +154,7 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {RECURSIVE} {return(recursive);}
 {UGO} {return(ugo);}
 {CONT} {return(cont);}
-{STDIN} {return(stdinn);}
+{STDIN} {return(stdinn);} 
 {FILEN} {return(filen);}
 {PP} {return(pp);}
 {DEST} {return(dest);}
