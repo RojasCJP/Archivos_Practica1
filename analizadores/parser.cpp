@@ -73,7 +73,7 @@
 #include <array>
 #include <list>
 #include <cstring>
-#include "../comandos/mkdisk.h"
+#include "../comandos/fdisk.h"
 #define MAX_DIGITS 10
 
 using namespace std;
@@ -86,10 +86,13 @@ int yyerror(const char* msg){
         return 0;
 }
 std::string parametros[4];
+std::string parametros8[8];
 int getIndex(string params[4]);
 void inicializarArreglo(string params[4]);
+int getIndex8(string params[8]);
+void inicializarArreglo8(string params[8]);
 
-#line 93 "parser.cpp"
+#line 96 "parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -205,14 +208,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 95 "bison.y"
+#line 99 "bison.y"
 
     int number;
     char text[200];
     char entrance[12];
     int other;
 
-#line 216 "parser.cpp"
+#line 219 "parser.cpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -593,17 +596,17 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   104,   104,   105,   108,   109,   110,   111,   112,   113,
-     114,   115,   116,   117,   118,   119,   120,   121,   122,   123,
-     124,   125,   126,   127,   128,   131,   137,   138,   141,   142,
-     143,   144,   147,   152,   155,   156,   159,   160,   161,   162,
-     163,   164,   165,   166,   169,   173,   174,   177,   178,   181,
-     184,   187,   188,   191,   192,   193,   196,   199,   200,   203,
-     204,   205,   208,   211,   214,   217,   220,   221,   224,   225,
-     226,   229,   232,   235,   236,   239,   240,   241,   244,   246,
-     247,   250,   251,   252,   253,   254,   257,   260,   263,   266,
-     267,   270,   271,   272,   275,   278,   279,   282,   283,   286,
-     289,   290,   293,   294,   297,   300,   301,   304,   305,   308
+       0,   108,   108,   109,   112,   113,   114,   115,   116,   117,
+     118,   119,   120,   121,   122,   123,   124,   125,   126,   127,
+     128,   129,   130,   131,   132,   135,   141,   142,   145,   146,
+     147,   148,   151,   156,   159,   160,   163,   164,   165,   166,
+     167,   168,   169,   170,   173,   177,   178,   181,   182,   185,
+     188,   191,   192,   195,   196,   197,   200,   203,   204,   207,
+     208,   209,   212,   215,   218,   221,   224,   225,   228,   229,
+     230,   233,   236,   239,   240,   243,   244,   245,   248,   250,
+     251,   254,   255,   256,   257,   258,   261,   264,   267,   270,
+     271,   274,   275,   276,   279,   282,   283,   286,   287,   290,
+     293,   294,   297,   298,   301,   304,   305,   308,   309,   312
 };
 #endif
 
@@ -1540,91 +1543,157 @@ yyreduce:
   switch (yyn)
     {
   case 25:
-#line 131 "bison.y"
+#line 135 "bison.y"
                           {cout<<"abr "<<parametros[0]<<parametros[1]<<parametros[2]<<parametros[3]<<endl;
 CreateDisk(diskConstructor(parametros));
 inicializarArreglo(parametros); 
 }
-#line 1549 "parser.cpp"
+#line 1552 "parser.cpp"
     break;
 
   case 26:
-#line 137 "bison.y"
+#line 141 "bison.y"
                            {parametros[getIndex(parametros)]=(yyvsp[-1].text);}
-#line 1555 "parser.cpp"
+#line 1558 "parser.cpp"
     break;
 
   case 27:
-#line 138 "bison.y"
+#line 142 "bison.y"
                  { parametros[getIndex(parametros)]=(yyvsp[0].text);}
-#line 1561 "parser.cpp"
+#line 1564 "parser.cpp"
     break;
 
   case 28:
-#line 141 "bison.y"
+#line 145 "bison.y"
                            {strcpy((yyval.text), (yyvsp[0].text));}
-#line 1567 "parser.cpp"
+#line 1570 "parser.cpp"
     break;
 
   case 29:
-#line 142 "bison.y"
+#line 146 "bison.y"
                          {strcpy((yyval.text), (yyvsp[0].entrance));}
-#line 1573 "parser.cpp"
+#line 1576 "parser.cpp"
     break;
 
   case 30:
-#line 143 "bison.y"
+#line 147 "bison.y"
                              {strcpy((yyval.text), (yyvsp[0].entrance));}
-#line 1579 "parser.cpp"
+#line 1582 "parser.cpp"
     break;
 
   case 31:
-#line 144 "bison.y"
+#line 148 "bison.y"
                            {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", (yyvsp[0].number));strcpy((yyval.text), num_char);}
-#line 1585 "parser.cpp"
+#line 1588 "parser.cpp"
     break;
 
   case 32:
-#line 147 "bison.y"
+#line 151 "bison.y"
                                   {
 RemoveDisk((yyvsp[0].text));
 }
-#line 1593 "parser.cpp"
+#line 1596 "parser.cpp"
+    break;
+
+  case 33:
+#line 156 "bison.y"
+                      {inicializarArreglo8(parametros8);}
+#line 1602 "parser.cpp"
+    break;
+
+  case 34:
+#line 159 "bison.y"
+                        {parametros8[getIndex8(parametros8)]=(yyvsp[-1].text);}
+#line 1608 "parser.cpp"
+    break;
+
+  case 35:
+#line 160 "bison.y"
+                {parametros8[getIndex8(parametros8)]=(yyvsp[0].text);}
+#line 1614 "parser.cpp"
+    break;
+
+  case 36:
+#line 163 "bison.y"
+                          {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", (yyvsp[0].number));strcpy((yyval.text), num_char);}
+#line 1620 "parser.cpp"
+    break;
+
+  case 37:
+#line 164 "bison.y"
+                             {strcpy((yyval.text), (yyvsp[0].entrance));}
+#line 1626 "parser.cpp"
+    break;
+
+  case 38:
+#line 165 "bison.y"
+                           {strcpy((yyval.text), (yyvsp[0].text));}
+#line 1632 "parser.cpp"
+    break;
+
+  case 39:
+#line 166 "bison.y"
+                           {strcpy((yyval.text), (yyvsp[0].entrance));}
+#line 1638 "parser.cpp"
+    break;
+
+  case 40:
+#line 167 "bison.y"
+                         {strcpy((yyval.text), (yyvsp[0].entrance));}
+#line 1644 "parser.cpp"
+    break;
+
+  case 41:
+#line 168 "bison.y"
+                             {strcpy((yyval.text), (yyvsp[0].entrance));}
+#line 1650 "parser.cpp"
+    break;
+
+  case 42:
+#line 169 "bison.y"
+                           {strcpy((yyval.text), (yyvsp[0].text));}
+#line 1656 "parser.cpp"
+    break;
+
+  case 43:
+#line 170 "bison.y"
+                          {strcpy((yyval.text),"%"+(yyvsp[0].number));}
+#line 1662 "parser.cpp"
     break;
 
   case 44:
-#line 169 "bison.y"
+#line 173 "bison.y"
                            {Mount(getPathMount(parametros), getNameMount(parametros));
 inicializarArreglo(parametros);}
-#line 1600 "parser.cpp"
+#line 1669 "parser.cpp"
     break;
 
   case 45:
-#line 173 "bison.y"
+#line 177 "bison.y"
                                     { parametros[getIndex(parametros)]=(yyvsp[-1].text);}
-#line 1606 "parser.cpp"
+#line 1675 "parser.cpp"
     break;
 
   case 46:
-#line 174 "bison.y"
+#line 178 "bison.y"
                     { parametros[getIndex(parametros)]=(yyvsp[0].text);}
-#line 1612 "parser.cpp"
+#line 1681 "parser.cpp"
     break;
 
   case 47:
-#line 177 "bison.y"
+#line 181 "bison.y"
                               {strcpy((yyval.text), (yyvsp[0].text));}
-#line 1618 "parser.cpp"
+#line 1687 "parser.cpp"
     break;
 
   case 48:
-#line 178 "bison.y"
+#line 182 "bison.y"
                            {strcpy((yyval.text), (yyvsp[0].text));}
-#line 1624 "parser.cpp"
+#line 1693 "parser.cpp"
     break;
 
 
-#line 1628 "parser.cpp"
+#line 1697 "parser.cpp"
 
       default: break;
     }
@@ -1856,7 +1925,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 311 "bison.y"
+#line 315 "bison.y"
 
 
 int getIndex(string params[4]){
@@ -1871,5 +1940,20 @@ int getIndex(string params[4]){
 void inicializarArreglo(string params[4]){
         for(int i = 0; i<4; i++){
                 params[i] = "";
+        }
+}
+
+int getIndex8(string params[8]){
+        for(int i = 0; i<8; i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
+
+void inicializarArreglo8(string params[8]){
+        for(int i = 0; i<8;i++){
+                params[i]="";
         }
 }

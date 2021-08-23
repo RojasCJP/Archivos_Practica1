@@ -4,7 +4,7 @@
 #include <array>
 #include <list>
 #include <cstring>
-#include "../comandos/mkdisk.h"
+#include "../comandos/fdisk.h"
 #define MAX_DIGITS 10
 
 using namespace std;
@@ -17,8 +17,11 @@ int yyerror(const char* msg){
         return 0;
 }
 std::string parametros[4];
+std::string parametros8[8];
 int getIndex(string params[4]);
 void inicializarArreglo(string params[4]);
+int getIndex8(string params[8]);
+void inicializarArreglo8(string params[8]);
 %}
 
 %define parse.error verbose
@@ -90,6 +93,7 @@ void inicializarArreglo(string params[4]);
 
 %type <text> PARAMMK
 %type <text> PARAMMOUNT
+%type <text> PARAMF
 
 %start START
 %union{
@@ -149,21 +153,21 @@ RemoveDisk($4);
 }
 ;
 
-F_FDISK: fdisk PARAMSF
+F_FDISK: fdisk PARAMSF{inicializarArreglo8(parametros8);}
 ;
 
-PARAMSF: PARAMF PARAMSF
-        |PARAMF
+PARAMSF: PARAMF PARAMSF {parametros8[getIndex8(parametros8)]=$1;}
+        |PARAMF {parametros8[getIndex8(parametros8)]=$1;}
 ;
 
-PARAMF: size igual number
-        |units igual e_units
-        |path igual e_path
-        |type igual e_type
-        |fit igual e_fit
-        |delet igual e_delet
-        |name igual e_name
-        |add igual number
+PARAMF: size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, num_char);}
+        |units igual e_units {strcpy($$, $3);}
+        |path igual e_path {strcpy($$, $3);}
+        |type igual e_type {strcpy($$, $3);}
+        |fit igual e_fit {strcpy($$, $3);}
+        |delet igual e_delet {strcpy($$, $3);}
+        |name igual e_name {strcpy($$,"#"+ $3);} 
+        |add igual number {strcpy($$,"%"+$3);}
 ;
 
 F_MOUNT: mount PARAMSMOUNT {Mount(getPathMount(parametros), getNameMount(parametros));
@@ -322,5 +326,20 @@ int getIndex(string params[4]){
 void inicializarArreglo(string params[4]){
         for(int i = 0; i<4; i++){
                 params[i] = "";
+        }
+}
+
+int getIndex8(string params[8]){
+        for(int i = 0; i<8; i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
+
+void inicializarArreglo8(string params[8]){
+        for(int i = 0; i<8;i++){
+                params[i]="";
         }
 }

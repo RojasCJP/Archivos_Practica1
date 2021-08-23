@@ -6,48 +6,12 @@
 #include <chrono>
 #include <ctime>
 #include <ctype.h>
+#include "structs.h"
 using namespace std;
 
-struct Partition
-{
-    char status;
-    char type;
-    char fit;
-    int start;
-    int size;
-    char name[16];
-};
-
-struct MBR
-{
-    int size;
-    time_t creationDate;
-    int diskSignature;
-    char fit;
-    Partition partition[4];
-};
-string rpath = "/home/juanpa/Documents";
+int particion = 0;
+Discos discos[5];
 //unit 1=>kb unit 2=>mb
-struct Disk
-{
-    string spath;
-    int size;
-    int unit;
-};
-struct mountedPartition
-{
-    int number;
-    int state;
-    int type = -1;
-    string name;
-};
-struct Discos
-{
-    string path;
-    char letra;
-    int state;
-    mountedPartition partitions[10];
-};
 
 void CreateDisk(Disk disk)
 {
@@ -74,7 +38,6 @@ void CreateDisk(Disk disk)
     }
 
     file = fopen(diskc, "wb");
-    cout << "llego aqui " << diskc << endl;
     fwrite("\0", 1, 1, file);
     fseek(file, tamano, SEEK_SET);
     fwrite("\0", 1, 1, file);
@@ -84,6 +47,7 @@ void CreateDisk(Disk disk)
     MBR mbr;
     mbr.size = tamano;
     mbr.diskSignature = rand() % 1000;
+    mbr.fit = 'f';
     mbr.creationDate = std::chrono::system_clock::to_time_t(end);
     for (int i = 0; i < 4; i++)
     {
@@ -95,7 +59,8 @@ void CreateDisk(Disk disk)
     }
 
     cout << "disco creado" << endl;
-    cout << "fecha de creacion: " << asctime(gmtime(&mbr.creationDate)) << endl;
+    cout << "fecha de creacion: " << asctime(gmtime(&mbr.creationDate));
+    cout << "signature: " << mbr.diskSignature << endl;
     cout << "tamano: " << mbr.size << endl;
     cout << "fit: " << mbr.fit << endl;
     fseek(file, 0, SEEK_SET);
@@ -183,30 +148,6 @@ Disk diskConstructor(string datosEntrada[4])
     discoPrueba.size = size;
     discoPrueba.unit = unit;
     return discoPrueba;
-}
-
-int particion = 0;
-Discos discos[5];
-
-bool ExistName(string name, MBR mbr)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        if (mbr.partition[i].name == name)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-bool exist_file(string &name)
-{
-    if (FILE *file = fopen(name.c_str(), "r"))
-    {
-        fclose(file);
-        return true;
-    }
-    return false;
 }
 
 void Mount(string path, string name)
@@ -304,6 +245,7 @@ string getPathMount(string params[4])
     }
     return "";
 }
+
 string getNameMount(string params[4])
 {
     string datos[4];
