@@ -1,0 +1,7 @@
+digraph g {
+rankdir=LR;
+subgraph cluster0
+    {
+        Array [ shape = record, label = "{ MBR|LIBRE\n 25% del disco| {EXTENDIDA|{EBR|LOGICA\n10% del disco|LIBRE\n10% del disco|EBR|LOGICA\n10% del disco}} | PRIMARIA\n 15% del disco|LIBRE }"] ;
+    }
+}

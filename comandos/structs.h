@@ -13,6 +13,7 @@ struct Disk
 struct mountedPartition
 {
     int number;
+    string identificador;
     int state;
     int type = -1;
     string name;

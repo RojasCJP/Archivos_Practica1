@@ -18,10 +18,11 @@ int main()
     cout << "delete " << separarParams(entrada).del << endl;
     cout << "name " << separarParams(entrada).name << endl;
     cout << "add " << separarParams(entrada).add << endl;
-    // RemoveDisk("/discoPrueba1.disk");
-    // CreateDisk(diskConstructor(entrada2));
+    RemoveDisk("/discoPrueba1.disk");
+    CreateDisk(diskConstructor(entrada2));
     makePartition(separarParams(entrada));
-    // leerEntrada("mkdisk -size = 300 -f = ff -u = k -path = /discoPrueba1.disk");
+    Mount("/discoPrueba1.disk", "adios");
+    Unmount("891A");
     // leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
     return 0;

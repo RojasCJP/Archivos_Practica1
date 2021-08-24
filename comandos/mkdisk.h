@@ -11,6 +11,7 @@ using namespace std;
 
 int particion = 0;
 Discos discos[5];
+char letras[5] = {'A', 'B', 'C', 'D', 'E'};
 //unit 1=>kb unit 2=>mb
 
 void CreateDisk(Disk disk)
@@ -150,12 +151,18 @@ Disk diskConstructor(string datosEntrada[4])
     return discoPrueba;
 }
 
-void Mount(string path, string name)
+void Mount(string spath, string name)
 {
-    if (path == "" || name == "")
+    if (spath == "" || name == "")
     {
         return;
     }
+    string path = spath;
+    for (int i = 0; i < spath.length(); i++)
+    {
+        path[i] = tolower(spath[i]);
+    }
+
     int i = 0;
     string completePath = rpath + path;
     if (!exist_file(completePath))
@@ -191,7 +198,7 @@ void Mount(string path, string name)
     for (int j = 0; j < 4; j++)
     {
         Partition partition = mbr.partition[j];
-        if (partition.status == '1')
+        if (partition.status == '1' && partition.name == name)
         {
             cout << "Particion: " << j << endl;
             cout << "Estado: " << partition.status << endl;
@@ -210,7 +217,7 @@ void Mount(string path, string name)
     }
     discos[i].state = 1;
     discos[i].path = completePath;
-
+    int contadorParticion = 0;
     for (int x = 0; x < 10; x++)
     {
         mountedPartition mPartition = discos[i].partitions[x];
@@ -226,10 +233,28 @@ void Mount(string path, string name)
                 cout << "error en la ejecucion del montaje" << endl;
             }
             discos[i].partitions[x].number = x + 1;
+            discos[i].partitions[x].identificador = "89" + to_string(discos[i].partitions[x].number) + letras[i];
+            contadorParticion = x;
             break;
         }
     }
+    cout << "el identificador de su disco es: " << discos[i].partitions[contadorParticion].identificador << endl;
     cout << "Disco Montado" << endl;
+}
+
+void Unmount(string id)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            if (discos[i].partitions[j].identificador == id)
+            {
+                discos[i].partitions[j].state = 0;
+                cout << "se desmonton la particion exitosamente" << endl;
+            }
+        }
+    }
 }
 
 string getPathMount(string params[4])

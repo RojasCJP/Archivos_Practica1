@@ -1651,7 +1651,7 @@ RemoveDisk((yyvsp[0].text));
 
   case 42:
 #line 169 "bison.y"
-                           {strcpy((yyval.text), (yyvsp[0].text));}
+                           {strcpy((yyval.text),"#"+ (yyvsp[0].text));}
 #line 1656 "parser.cpp"
     break;
 

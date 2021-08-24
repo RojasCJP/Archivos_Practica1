@@ -1,0 +1,113 @@
+digraph test {
+    graph [ratio=fill];
+    node [label="\N", fontsize=15, shape=plaintext];
+    graph [bb="0,0,352,154"];
+    arset [label=<
+        <TABLE ALIGN="LEFT">
+            <TR>
+                <TD>Nombre</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Valor</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Tamano MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>10485760</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Fecha creacion MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>30/11/2015 12:45</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Disk Signature MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>123456</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Fit Disk</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>First</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 1 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 1 Type</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>P</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 1 Fit</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Best</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 1 Size</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>10 k</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 1 Name</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Adios</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 2 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 3 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 4 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+        </TABLE>
+    >, ];
+}

@@ -2,6 +2,19 @@
 #include "mkdisk.h"
 using namespace std;
 
+int getMinor(MBR mbr)
+{
+    int indexMinor = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if (mbr.partition[i].start < mbr.partition[indexMinor].start)
+        {
+            indexMinor = i;
+        }
+    }
+    return indexMinor;
+}
+
 ParamsFDisk separarParams(string params[8])
 {
     ParamsFDisk paramsFinal;
@@ -161,10 +174,17 @@ void makePartition(ParamsFDisk params)
                 {
                     for (int j = 0; j < 4; j++)
                     {
+                        int posibleInicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
                         int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
+                        if (posibleInicial > mbr.partition[index].size)
+                        {
+                            mbr.partition[index].start = sizeof(MBR) + 2;
+                            break;
+                        }
                         if (posible > mbr.partition[index].size)
                         {
                             mbr.partition[index].start = mbr.partition[i].start + mbr.partition[i].size + 1;
+                            break;
                         }
                     }
                 }
