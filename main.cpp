@@ -1,14 +1,14 @@
 #include <iostream>
 // #include "analizadores/parser.h"
 // #include "analizadores/scanner.h"
-#include "comandos/fdisk.h"
+#include "comandos/reportes.h"
 using namespace std;
 
 void leerEntrada(string entrada);
 
 int main()
 {
-    string entrada[8] = {"10", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios", ""};
+    string entrada[8] = {"10", "k", "/discoPrueba1.disk", "p", "wf", "", "#adios", ""};
     string entrada2[4] = {"300", "k", "/discoPrueba1.disk", "ff"};
     cout << "size " << separarParams(entrada).size << endl;
     cout << "units " << separarParams(entrada).units << endl;
@@ -23,6 +23,7 @@ int main()
     makePartition(separarParams(entrada));
     Mount("/discoPrueba1.disk", "adios");
     Unmount("891A");
+    reporteDisk("/discoPrueba1.disk");
     // leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
     return 0;

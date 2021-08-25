@@ -1,7 +1,7 @@
 digraph g {
-rankdir=LR;
-subgraph cluster0
+        rankdir = LR;
+    subgraph cluster0
     {
-        Array [ shape = record, label = "{ MBR|LIBRE\n 25% del disco| {EXTENDIDA|{EBR|LOGICA\n10% del disco|LIBRE\n10% del disco|EBR|LOGICA\n10% del disco}} | PRIMARIA\n 15% del disco|LIBRE }"] ;
+        Array [ shape = record, label = "{MBR|libre|243_string::_M_construct null not valid|adios�R0|libre|d�0|libre|0|libre}"] ;
     }
 }

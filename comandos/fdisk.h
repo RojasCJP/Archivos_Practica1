@@ -118,7 +118,7 @@ void makePartition(ParamsFDisk params)
     cout << "Signature: " << mbr.diskSignature << endl;
     cout << "Tamano: " << mbr.size << endl;
     cout << "Fit: " << mbr.fit << endl;
-    cout << "inicio 1 " << mbr.partition[1].name << endl;
+    cout << "inicio 1 " << mbr.partition[0].status << endl;
 
     int index = 0;
     bool existente = false;
@@ -167,9 +167,10 @@ void makePartition(ParamsFDisk params)
             {
                 mbr.partition[index].fit = 'f';
             }
-            //todo tengo que ver como poner el start
             if (mbr.partition[index].fit == 'f')
             {
+                //todoS este es para los primaria, tengo que ver como hacerlo para las extendidas y como hacerlo para las logicas
+                bool trigger = false;
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
@@ -179,14 +180,120 @@ void makePartition(ParamsFDisk params)
                         if (posibleInicial > mbr.partition[index].size)
                         {
                             mbr.partition[index].start = sizeof(MBR) + 2;
+                            trigger = true;
                             break;
                         }
-                        if (posible > mbr.partition[index].size)
+                        else if (posible > mbr.partition[index].size)
                         {
                             mbr.partition[index].start = mbr.partition[i].start + mbr.partition[i].size + 1;
+                            trigger = true;
                             break;
                         }
                     }
+                }
+                if (!trigger)
+                {
+                    cout << "no hay espacio para crear la particion" << endl;
+                    mbr.partition[index].status = '0';
+                    mbr.partition[index].size = 0;
+                    mbr.partition[index].fit = 'f';
+                    mbr.partition[index].start = mbr.size;
+                    strcpy(mbr.partition[index].name, "");
+                    return;
+                }
+            }
+            else if (mbr.partition[index].fit == 'b')
+            {
+                int indexMejor = 12;
+                int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
+                int definitivo;
+                if (inicial > mbr.partition[index].size)
+                {
+                    definitivo = inicial;
+                }
+                else
+                {
+                    definitivo = INT32_MAX;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
+                        if (posible < definitivo && posible > mbr.partition[index].size)
+                        {
+                            indexMejor = i;
+                            definitivo = posible;
+                        }
+                    }
+                }
+                if (definitivo != INT32_MAX)
+                {
+                    if (indexMejor == 12)
+                    {
+                        mbr.partition[index].start = sizeof(MBR) + 2;
+                    }
+                    else
+                    {
+                        mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
+                    }
+                }
+                else
+                {
+                    cout << "no hay espacio para crear la particion" << endl;
+                    mbr.partition[index].status = '0';
+                    mbr.partition[index].size = 0;
+                    mbr.partition[index].fit = 'f';
+                    mbr.partition[index].start = mbr.size;
+                    strcpy(mbr.partition[index].name, "");
+                    return;
+                }
+            }
+            else
+            {
+                int indexMejor = 12;
+                int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
+                int definitivo;
+                if (inicial > mbr.partition[index].size)
+                {
+                    definitivo = inicial;
+                }
+                else
+                {
+                    definitivo = INT32_MIN;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
+                        if (posible > definitivo && posible > mbr.partition[index].size)
+                        {
+                            indexMejor = i;
+                            definitivo = posible;
+                        }
+                    }
+                }
+                if (definitivo != INT32_MIN)
+                {
+                    if (indexMejor == 12)
+                    {
+                        mbr.partition[index].start = sizeof(MBR) + 2;
+                    }
+                    else
+                    {
+                        mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
+                    }
+                }
+                else
+                {
+                    cout << "no hay espacio para crear la particion" << endl;
+                    mbr.partition[index].status = '0';
+                    mbr.partition[index].size = 0;
+                    mbr.partition[index].fit = 'f';
+                    mbr.partition[index].start = mbr.size;
+                    strcpy(mbr.partition[index].name, "");
+                    return;
                 }
             }
             strcpy(mbr.partition[index].name, name.c_str());
@@ -203,9 +310,41 @@ void makePartition(ParamsFDisk params)
     }
     else if (del != "")
     {
+        if (del == "full")
+        {
+            //todo tengo que escribir todo 0 en el documento
+            mbr.partition[index].status = '0';
+            mbr.partition[index].size = 0;
+            mbr.partition[index].fit = 'f';
+            mbr.partition[index].start = mbr.size;
+            strcpy(mbr.partition[index].name, "");
+        }
+        else if (del == "fast")
+        {
+            mbr.partition[index].status = '0';
+            mbr.partition[index].size = 0;
+            mbr.partition[index].fit = 'f';
+            mbr.partition[index].start = mbr.size;
+            strcpy(mbr.partition[index].name, "");
+        }
     }
     else if (add != 0)
     {
+        bool posible = false;
+        int siguientePart;
+        int finalPart = mbr.partition[index].start + mbr.partition[index].size;
+        for (int i = 0; i < 4; i++)
+        {
+            if (finalPart < mbr.partition[i].start && mbr.partition[i].start < mbr.partition[siguientePart].start)
+            {
+                siguientePart = i;
+            }
+        }
+
+        if ((mbr.partition[siguientePart].start - finalPart) > add)
+        {
+            mbr.partition[index].size = mbr.partition[index].size + add;
+        }
     }
     fseek(file, 0, SEEK_SET);
     fwrite(&mbr, sizeof(MBR), 1, file);
