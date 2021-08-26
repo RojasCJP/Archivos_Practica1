@@ -31,7 +31,7 @@ int main() {
     Mount("/discoPrueba1.disk", "adios");
     Unmount("891A");
     //todo tengo que hacer que el reporte de discos sea por id no por path
-//    reporteDisk("/discoPrueba1.disk");
+    reporteMBR("/discoPrueba1.disk");
 //    leerEntrada("mkdisk -path=/discoPrueba1.disk -size=300 -u=k");
 //     leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
