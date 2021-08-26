@@ -100,6 +100,9 @@ void makePartition(ParamsFDisk params)
     string del = params.del;
     string name = params.name;
     int add = params.add;
+    if(add < -10000 || add > 10000){
+        add = 0;
+    }
     if (units == 'b')
     {
         size = params.size;

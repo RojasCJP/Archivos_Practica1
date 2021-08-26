@@ -73,7 +73,7 @@
 #include <array>
 #include <list>
 #include <cstring>
-#include "../comandos/fdisk.h"
+#include "../comandos/reportes.h"
 #define MAX_DIGITS 10
 
 using namespace std;
@@ -1651,13 +1651,13 @@ RemoveDisk((yyvsp[0].text));
 
   case 42:
 #line 169 "bison.y"
-                           {strcpy((yyval.text),"#"+ (yyvsp[0].text));}
+                           {strcpy((yyval.text),'#'+ (yyvsp[0].text));}
 #line 1656 "parser.cpp"
     break;
 
   case 43:
 #line 170 "bison.y"
-                          {strcpy((yyval.text),"%"+(yyvsp[0].number));}
+                          {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", (yyvsp[0].number));strcpy((yyval.text), '%'+num_char);}
 #line 1662 "parser.cpp"
     break;
 

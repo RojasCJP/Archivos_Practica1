@@ -83,7 +83,7 @@ void RemoveDisk(string subpath)
     if (file != NULL)
     {
         remove(fullPath.c_str());
-        system("pause");
+//        system("pause");
         cout << "se completo la eliminacion" << fullPath << endl;
     }
     else

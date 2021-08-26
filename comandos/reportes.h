@@ -88,11 +88,11 @@ void reporteDisk(string spath)
     cout << libre4 << endl;
     cout << libre5 << endl;
 
-    espacioLibre1 = libre1 != libre2 && libre1 != 0 ? ("|libre\\n" + to_string(libre1 / (double)mbr.size)) : "";
-    espacioLibre2 = libre2 != libre3 && libre2 != 0 ? ("|libre\\n" + to_string(libre2 / (double)mbr.size)) : "";
-    espacioLibre3 = libre3 != libre4 && libre3 != 0 ? ("|libre\\n" + to_string(libre3 / (double)mbr.size)) : "";
-    espacioLibre4 = libre4 != libre5 && libre4 != 0 ? ("|libre\\n" + to_string(libre4 / (double)mbr.size)) : "";
-    espacioLibre5 = libre5 != mbr.size && libre5 != 0 ? ("|libre\\n" + to_string(libre5 / (double)mbr.size)) : "";
+    espacioLibre1 =  libre1 != 0 ? ("|libre\\n" + to_string(libre1 / (double)mbr.size)) : "";
+    espacioLibre2 =  libre2 != 0 ? ("|libre\\n" + to_string(libre2 / (double)mbr.size)) : "";
+    espacioLibre3 =  libre3 != 0 ? ("|libre\\n" + to_string(libre3 / (double)mbr.size)) : "";
+    espacioLibre4 =  libre4 != 0 ? ("|libre\\n" + to_string(libre4 / (double)mbr.size)) : "";
+    espacioLibre5 =  libre5 != 0 ? ("|libre\\n" + to_string(libre5 / (double)mbr.size)) : "";
 
     string inicioReporte = "digraph g {\n        rankdir = LR;\n    subgraph cluster0\n    {\n        ";
     string discoReporte = "Array [ shape = record, label = \"{";

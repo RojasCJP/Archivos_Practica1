@@ -4,7 +4,7 @@
 #include <array>
 #include <list>
 #include <cstring>
-#include "../comandos/fdisk.h"
+#include "../comandos/reportes.h"
 #define MAX_DIGITS 10
 
 using namespace std;
@@ -166,8 +166,8 @@ PARAMF: size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_
         |type igual e_type {strcpy($$, $3);}
         |fit igual e_fit {strcpy($$, $3);}
         |delet igual e_delet {strcpy($$, $3);}
-        |name igual e_name {strcpy($$,"#"+ $3);} 
-        |add igual number {strcpy($$,"%"+$3);}
+        |name igual e_name {strcpy($$,'#'+ $3);}
+        |add igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, '%'+num_char);}
 ;
 
 F_MOUNT: mount PARAMSMOUNT {Mount(getPathMount(parametros), getNameMount(parametros));

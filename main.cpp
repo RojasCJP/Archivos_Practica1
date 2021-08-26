@@ -2,17 +2,18 @@
 // #include "analizadores/parser.h"
 // #include "analizadores/scanner.h"
 #include "comandos/reportes.h"
+
 using namespace std;
 
 void leerEntrada(string entrada);
 
-int main()
-{
+int main() {
+    cout<<"a ver si ahorita si se le antoja jalar"<<endl;
     string entrada[4] = {"300", "k", "/discoPrueba1.disk", "ff"};
-    string entrada1[8] = {"100", "k", "/discoPrueba1.disk", "p", "wf", "", "#adios", ""};
-    string entrada2[8] = {"100", "k", "/discoPrueba1.disk", "p", "wf", "", "#adios1", ""};
-    string entrada3[8] = {"10", "k", "/discoPrueba1.disk", "p", "wf", "", "#adios2", ""};
-    string entrada4[8] = {"10", "k", "/discoPrueba1.disk", "p", "wf", "", "#adios3", ""};
+    string entrada1[8] = {"100", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios", ""};
+    string entrada2[8] = {"100", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios1", ""};
+    string entrada3[8] = {"10", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios2", ""};
+    string entrada4[8] = {"10", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios4", ""};
     // cout << "size " << separarParams(entrada).size << endl;
     // cout << "units " << separarParams(entrada).units << endl;
     // cout << "path " << separarParams(entrada).path << endl;
@@ -30,8 +31,9 @@ int main()
     Mount("/discoPrueba1.disk", "adios");
     Unmount("891A");
     //todo tengo que hacer que el reporte de discos sea por id no por path
-    reporteDisk("/discoPrueba1.disk");
-    // leerEntrada("rmdisk -path=/discoPrueba1.disk");
+//    reporteDisk("/discoPrueba1.disk");
+//    leerEntrada("mkdisk -path=/discoPrueba1.disk -size=300 -u=k");
+//     leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
     return 0;
 }
