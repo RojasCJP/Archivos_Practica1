@@ -74,6 +74,22 @@ ParamsFDisk separarParams(string params[8])
     return paramsFinal;
 }
 
+int getIndexFollow(MBR mbr, int index)
+{
+    int indexReturn = index;
+    int sizeBetween = INT32_MAX;
+    int finalIndex = mbr.partition[index].start + mbr.partition[index].size;
+    for (int i = 0; i < 4; i++)
+    {
+        if (finalIndex < mbr.partition[i].start && (mbr.partition[i].start - finalIndex) < sizeBetween)
+        {
+            sizeBetween = mbr.partition[i].start - finalIndex;
+            indexReturn = i;
+        }
+    }
+    return indexReturn;
+}
+
 void makePartition(ParamsFDisk params)
 {
     int size = params.size;
@@ -167,134 +183,152 @@ void makePartition(ParamsFDisk params)
             {
                 mbr.partition[index].fit = 'f';
             }
-            if (mbr.partition[index].fit == 'f')
+            if (type == 'p' || type == 'e')
             {
-                //todoS este es para los primaria, tengo que ver como hacerlo para las extendidas y como hacerlo para las logicas
-                bool trigger = false;
-                for (int i = 0; i < 4; i++)
+                if (type == 'p')
                 {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        int posibleInicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
-                        int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
-                        if (posibleInicial > mbr.partition[index].size)
-                        {
-                            mbr.partition[index].start = sizeof(MBR) + 2;
-                            trigger = true;
-                            break;
-                        }
-                        else if (posible > mbr.partition[index].size)
-                        {
-                            mbr.partition[index].start = mbr.partition[i].start + mbr.partition[i].size + 1;
-                            trigger = true;
-                            break;
-                        }
-                    }
-                }
-                if (!trigger)
-                {
-                    cout << "no hay espacio para crear la particion" << endl;
-                    mbr.partition[index].status = '0';
-                    mbr.partition[index].size = 0;
-                    mbr.partition[index].fit = 'f';
-                    mbr.partition[index].start = mbr.size;
-                    strcpy(mbr.partition[index].name, "");
-                    return;
-                }
-            }
-            else if (mbr.partition[index].fit == 'b')
-            {
-                int indexMejor = 12;
-                int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
-                int definitivo;
-                if (inicial > mbr.partition[index].size)
-                {
-                    definitivo = inicial;
+                    mbr.partition[index].type = 'p';
                 }
                 else
                 {
-                    definitivo = INT32_MAX;
+                    mbr.partition[index].type = 'e';
                 }
-                for (int i = 0; i < 4; i++)
+
+                if (mbr.partition[index].fit == 'f')
                 {
-                    for (int j = 0; j < 4; j++)
+                    //todoS este es para los primaria, tengo que ver como hacerlo para las extendidas y como hacerlo para las logicas
+                    bool trigger = false;
+                    for (int i = 0; i < 4; i++)
                     {
-                        int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
-                        if (posible < definitivo && posible > mbr.partition[index].size)
+                        for (int j = 0; j < 4; j++)
                         {
-                            indexMejor = i;
-                            definitivo = posible;
+                            if (!trigger)
+                            {
+                                int posibleInicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
+                                int posible = mbr.partition[getIndexFollow(mbr, i)].start - (mbr.partition[i].start + mbr.partition[i].size);
+                                if (posibleInicial > mbr.partition[index].size)
+                                {
+                                    mbr.partition[index].start = sizeof(MBR) + 2;
+                                    trigger = true;
+                                    break;
+                                }
+                                else if (posible > mbr.partition[index].size)
+                                {
+                                    mbr.partition[index].start = mbr.partition[i].start + mbr.partition[i].size + 1;
+                                    trigger = true;
+                                    break;
+                                }
+                            }
                         }
                     }
-                }
-                if (definitivo != INT32_MAX)
-                {
-                    if (indexMejor == 12)
+                    if (!trigger)
                     {
-                        mbr.partition[index].start = sizeof(MBR) + 2;
+                        cout << "no hay espacio para crear la particion" << endl;
+                        mbr.partition[index].status = '0';
+                        mbr.partition[index].size = 0;
+                        mbr.partition[index].fit = 'f';
+                        mbr.partition[index].start = mbr.size;
+                        strcpy(mbr.partition[index].name, "");
+                        return;
+                    }
+                }
+                else if (mbr.partition[index].fit == 'b')
+                {
+                    int indexMejor = 12;
+                    int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
+                    int definitivo;
+                    if (inicial > mbr.partition[index].size)
+                    {
+                        definitivo = inicial;
                     }
                     else
                     {
-                        mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
+                        definitivo = INT32_MAX;
+                    }
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
+                            if (posible < definitivo && posible > mbr.partition[index].size)
+                            {
+                                indexMejor = i;
+                                definitivo = posible;
+                            }
+                        }
+                    }
+                    if (definitivo != INT32_MAX)
+                    {
+                        if (indexMejor == 12)
+                        {
+                            mbr.partition[index].start = sizeof(MBR) + 2;
+                        }
+                        else
+                        {
+                            mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
+                        }
+                    }
+                    else
+                    {
+                        cout << "no hay espacio para crear la particion" << endl;
+                        mbr.partition[index].status = '0';
+                        mbr.partition[index].size = 0;
+                        mbr.partition[index].fit = 'f';
+                        mbr.partition[index].start = mbr.size;
+                        strcpy(mbr.partition[index].name, "");
+                        return;
                     }
                 }
                 else
                 {
-                    cout << "no hay espacio para crear la particion" << endl;
-                    mbr.partition[index].status = '0';
-                    mbr.partition[index].size = 0;
-                    mbr.partition[index].fit = 'f';
-                    mbr.partition[index].start = mbr.size;
-                    strcpy(mbr.partition[index].name, "");
-                    return;
+                    int indexMejor = 12;
+                    int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
+                    int definitivo;
+                    if (inicial > mbr.partition[index].size)
+                    {
+                        definitivo = inicial;
+                    }
+                    else
+                    {
+                        definitivo = INT32_MIN;
+                    }
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            int posible = mbr.partition[getIndexFollow(mbr, i)].start - (mbr.partition[i].start + mbr.partition[i].size);
+                            if (posible > definitivo && posible > mbr.partition[index].size)
+                            {
+                                indexMejor = i;
+                                definitivo = posible;
+                            }
+                        }
+                    }
+                    if (definitivo != INT32_MIN)
+                    {
+                        if (indexMejor == 12)
+                        {
+                            mbr.partition[index].start = sizeof(MBR) + 2;
+                        }
+                        else
+                        {
+                            mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
+                        }
+                    }
+                    else
+                    {
+                        cout << "no hay espacio para crear la particion" << endl;
+                        mbr.partition[index].status = '0';
+                        mbr.partition[index].size = 0;
+                        mbr.partition[index].fit = 'f';
+                        mbr.partition[index].start = mbr.size;
+                        strcpy(mbr.partition[index].name, "");
+                        return;
+                    }
                 }
             }
             else
             {
-                int indexMejor = 12;
-                int inicial = mbr.partition[getMinor(mbr)].start - sizeof(MBR);
-                int definitivo;
-                if (inicial > mbr.partition[index].size)
-                {
-                    definitivo = inicial;
-                }
-                else
-                {
-                    definitivo = INT32_MIN;
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        int posible = mbr.partition[j].start - (mbr.partition[i].start + mbr.partition[i].size);
-                        if (posible > definitivo && posible > mbr.partition[index].size)
-                        {
-                            indexMejor = i;
-                            definitivo = posible;
-                        }
-                    }
-                }
-                if (definitivo != INT32_MIN)
-                {
-                    if (indexMejor == 12)
-                    {
-                        mbr.partition[index].start = sizeof(MBR) + 2;
-                    }
-                    else
-                    {
-                        mbr.partition[index].start = mbr.partition[indexMejor].start + mbr.partition[indexMejor].size + 1;
-                    }
-                }
-                else
-                {
-                    cout << "no hay espacio para crear la particion" << endl;
-                    mbr.partition[index].status = '0';
-                    mbr.partition[index].size = 0;
-                    mbr.partition[index].fit = 'f';
-                    mbr.partition[index].start = mbr.size;
-                    strcpy(mbr.partition[index].name, "");
-                    return;
-                }
             }
             strcpy(mbr.partition[index].name, name.c_str());
             cout << "particion creada con exito" << endl;
