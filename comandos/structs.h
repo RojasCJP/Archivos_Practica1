@@ -3,15 +3,32 @@
 using namespace std;
 string rpath = "/home/juanpa/Documents";
 
-struct Disk
-{
+struct INODO {};
+struct BLOCK {};
+struct BLOCK_DIR {};
+
+struct SuperBlock {
+    int fileSystemType;
+    int inodesCount;
+    int blocksCount;
+    int inodoSize;
+    int blockSize;
+    int firstInodo;
+    int firstBlock;
+    int bitMapInodoStart;
+    int bitMabBlockStart;
+    int inodoStart;
+    int blockStart;
+    int journal;
+};
+
+struct Disk {
     string spath;
     int size;
     int unit;
 };
 
-struct mountedPartition
-{
+struct mountedPartition {
     int number;
     string identificador;
     int state;
@@ -19,16 +36,14 @@ struct mountedPartition
     string name;
 };
 
-struct Discos
-{
+struct Discos {
     string path;
     char letra;
     int state;
     mountedPartition partitions[10];
 };
 
-struct Partition
-{
+struct Partition {
     char status;
     char type;
     char fit;
@@ -37,8 +52,7 @@ struct Partition
     char name[16];
 };
 
-struct MBR
-{
+struct MBR {
     int size;
     time_t creationDate;
     int diskSignature;
@@ -46,8 +60,7 @@ struct MBR
     Partition partition[4];
 };
 
-struct ParamsFDisk
-{
+struct ParamsFDisk {
     int size;
     char units;
     string path;
@@ -58,22 +71,17 @@ struct ParamsFDisk
     int add;
 };
 
-bool ExistName(string name, MBR mbr)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        if (mbr.partition[i].name == name)
-        {
+bool ExistName(string name, MBR mbr) {
+    for (int i = 0; i < 4; i++) {
+        if (mbr.partition[i].name == name) {
             return true;
         }
     }
     return false;
 }
 
-bool exist_file(string &name)
-{
-    if (FILE *file = fopen(name.c_str(), "r"))
-    {
+bool exist_file(string &name) {
+    if (FILE *file = fopen(name.c_str(), "r")) {
         fclose(file);
         return true;
     }

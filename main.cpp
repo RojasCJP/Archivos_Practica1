@@ -8,20 +8,12 @@ using namespace std;
 void leerEntrada(string entrada);
 
 int main() {
-    cout<<"a ver si ahorita si se le antoja jalar"<<endl;
+    cout << "a ver si ahorita si se le antoja jalar" << endl;
     string entrada[4] = {"300", "k", "/discoPrueba1.disk", "ff"};
     string entrada1[8] = {"100", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios", ""};
     string entrada2[8] = {"100", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios1", ""};
     string entrada3[8] = {"10", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios2", ""};
     string entrada4[8] = {"", "k", "/discoPrueba1.disk", "", "", "", "#adios2", "%10"};
-    // cout << "size " << separarParams(entrada).size << endl;
-    // cout << "units " << separarParams(entrada).units << endl;
-    // cout << "path " << separarParams(entrada).path << endl;
-    // cout << "type " << separarParams(entrada).type << endl;
-    // cout << "fit " << separarParams(entrada).fit << endl;
-    // cout << "delete " << separarParams(entrada).del << endl;
-    // cout << "name " << separarParams(entrada).name << endl;
-    // cout << "add " << separarParams(entrada).add << endl;
     RemoveDisk("/discoPrueba1.disk");
     CreateDisk(diskConstructor(entrada));
     makePartition(separarParams(entrada1));
