@@ -56,7 +56,7 @@ void CreateDisk(Disk disk)
         mbr.partition[i].size = 0;
         mbr.partition[i].fit = 'f';
         mbr.partition[i].start = tamano;
-        strcpy(mbr.partition[i].name, "");
+        strcpy(mbr.partition[i].name,"");
     }
 
     cout << "disco creado" << endl;
@@ -188,6 +188,7 @@ void Mount(string spath, string name)
     fseek(file, 0, SEEK_SET);
     MBR mbr;
     fread(&mbr, sizeof(MBR), 1, file);
+    fclose(file);
     cout << "------------------------------------------------disco encontrado------------------------------------------------" << endl;
     cout << "Fecha creacion: " << asctime(gmtime(&mbr.creationDate)) << endl;
     cout << "Signature: " << mbr.diskSignature << endl;

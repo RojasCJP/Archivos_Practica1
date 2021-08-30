@@ -4,6 +4,7 @@
 CMakeFiles/Archivos_Practica1.dir/main.cpp.o: \
  ../comandos/fdisk.h \
  ../comandos/mkdisk.h \
+ ../comandos/mkfs.h \
  ../comandos/reportes.h \
  ../comandos/structs.h \
  ../main.cpp

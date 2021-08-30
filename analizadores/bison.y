@@ -193,7 +193,7 @@ PARAMSMKFS: PARAMMKFS PARAMSMKFS
 ;
 
 PARAMMKFS: id igual e_id
-        |type igual e_type
+        |type igual e_delet
         |fs igual e_name
 ;
 

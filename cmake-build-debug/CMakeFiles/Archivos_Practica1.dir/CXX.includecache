@@ -32,13 +32,19 @@ ctype.h
 structs.h
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/structs.h
 
+/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/mkfs.h
+fdisk.h
+/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/fdisk.h
+math.h
+-
+
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
 iostream
 -
 string
 -
-fdisk.h
-/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/fdisk.h
+mkfs.h
+/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/mkfs.h
 
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/structs.h
 iostream
@@ -49,4 +55,8 @@ iostream
 -
 comandos/reportes.h
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
+fstream
+-
+vector
+-
 

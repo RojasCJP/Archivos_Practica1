@@ -4,6 +4,38 @@
 
 using namespace std;
 
+struct ParamsMKFS {
+    string id;
+    string type;
+    int fs;
+};
+
+ParamsMKFS separarParamsMKFS(string params[3]) {
+    ParamsMKFS paramsFinal;
+    string datos[3];
+    for (int i = 0; i < 3; i++) {
+        datos[i] = params[i];
+        for (int j = 0; j < params[i].length(); j++) {
+            datos[i][j] = tolower(params[i][j]);
+        }
+        if (datos[i][0] == '8') {
+            paramsFinal.id = params[i];
+        } else if (datos[i][0] == '2' || datos[i][0] == '3') {
+            if (datos[i][0] == '3') {
+                paramsFinal.fs = 3;
+            } else {
+                paramsFinal.fs = 2;
+            }
+        } else if (datos[i] == "fast" || datos[i] == "full") {
+            paramsFinal.type = datos[i];
+        } else {
+            cout << "ingreso mal sus datos para formatear por favor revise la entrada" << endl;
+        }
+
+    }
+    return paramsFinal;
+}
+
 string getPathDisk(string idPartitionMounted) {
     Partition partition;
     string path;
@@ -102,9 +134,10 @@ double Ext3GetN(int tamano) {
     return floor(N);
 }
 
-void mkfsMethod(string id) {
+void mkfsMethod(ParamsMKFS params) {
+    string id = params.id;
+    int fs = params.fs;
     auto end = std::chrono::system_clock::now();
-//todo tengo que ver que reciba los demas parametros para hacer las cosas con el ext3 y lo del fast y full que no se que es bien la verda
     string path = getPathDisk(id);
     string name = getNamePartition(id);
     int start = 0;
@@ -120,10 +153,13 @@ void mkfsMethod(string id) {
         }
     }
     int N = 0;
-    //todo aqui va lo del ext2 y ext3
-    N = Ext2GetN(getSizePartition(id));
+    if (fs == 2) {
+        N = Ext2GetN(getSizePartition(id));
+    } else {
+        N = Ext3GetN(getSizePartition(id));
+    }
     SuperBlock SBnuevo;
-    SBnuevo.filesystemType = 2; //todo esta es la ext entonces tambien tengo que tocarlo aqui
+    SBnuevo.filesystemType = fs;
     SBnuevo.inodesCount = N;
     SBnuevo.blocksCount = 3 * N;
     SBnuevo.freeInodesCount = N;
@@ -141,7 +177,20 @@ void mkfsMethod(string id) {
     int aux3 = aux2 + N * sizeof(INODO);
     SBnuevo.inodeStart = aux3;
     SBnuevo.blockStart = aux3 + 3 * N * sizeof(BLOCK_FILE);
+
+    if (params.type == "full") {
+        fseek(file, start, SEEK_SET);
+        for (int i = 0; i < getSizePartition(id); ++i) {
+            fwrite("\0", 1, 1, file);
+        }
+    }
+
+    fseek(file, start, SEEK_SET);
+    fwrite(&SBnuevo, sizeof(SuperBlock), 1, file);
+    fclose(file);
+    cout << "se formateo la particion" << endl;
 }
+
 //todo tengo que jalar lo de la carpeta root
 
 

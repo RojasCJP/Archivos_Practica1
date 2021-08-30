@@ -13,8 +13,9 @@ string convertToString(char *a) {
     return s;
 }
 
-void reporteDisk(string spath) {
-    string path = spath;
+void reporteDisk(string spath,string id) {
+    string path = getPathDisk(id);
+    string pathOutput = spath;
     for (int i = 0; i < path.length(); i++) {
         path[i] = tolower(spath[i]);
     }
@@ -97,8 +98,9 @@ void reporteDisk(string spath) {
     cout << reporteCompleto << endl;
 }
 
-void reporteMBR(string spath) {
-    string path = spath;
+void reporteMBR(string spath,string id) {
+    string path = getPathDisk(id);
+    string pathOutput = spath;
     for (int i = 0; i < path.length(); i++) {
         path[i] = tolower(spath[i]);
     }

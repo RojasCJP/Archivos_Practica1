@@ -258,8 +258,12 @@ void makePartition(ParamsFDisk params) {
         }
     } else if (del != "") {
         if (del == "full") {
+            file = fopen(sc, "rb+");
             fseek(file, mbr.partition[index].start, SEEK_SET);
-            fwrite("\0", mbr.partition[index].size,1,file);
+            for (int i = 0; i < mbr.partition[index].size; ++i) {
+                fwrite("\0", 1, 1, file);
+            }
+            cout<<mbr.partition[index].size<< "tamano de la particion que voy a eliminar"<<endl;
             mbr.partition[index].status = '0';
             mbr.partition[index].size = 0;
             mbr.partition[index].fit = 'f';
@@ -274,7 +278,7 @@ void makePartition(ParamsFDisk params) {
         }
     } else if (add != 0) {
         bool posible = false;
-        int siguientePart= getIndexFollow(mbr,index);
+        int siguientePart = getIndexFollow(mbr, index);
         int finalPart = mbr.partition[index].start + mbr.partition[index].size;
         for (int i = 0; i < 4; i++) {
             if (finalPart < mbr.partition[i].start && mbr.partition[i].start < mbr.partition[siguientePart].start) {
@@ -295,7 +299,9 @@ void makePartition(ParamsFDisk params) {
             mbr.partition[index].size = mbr.partition[index].size + cantidadAdd;
         }
     }
+    file = fopen(sc, "rb+");
     fseek(file, 0, SEEK_SET);
     fwrite(&mbr, sizeof(MBR), 1, file);
     fclose(file);
 }
+//todo tengo que hacer las particiones logicas
