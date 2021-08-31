@@ -37,11 +37,12 @@ int leerArchivo(string nombreArchivo) {
 
 int main() {
     cout << "a ver si ahorita si se le antoja jalar" << endl;
-    string entrada[4] = {"300", "k", "/discoPrueba1.disk", "ff"};
-    string entrada1[8] = {"10", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios", ""};
-    string entrada2[8] = {"10", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios1", ""};
-    string entrada3[8] = {"10", "k", "/discoPrueba1.disk", "e", "ff", "", "#adios2", ""};
-    string entrada4[8] = {"", "k", "/discoPrueba1.disk", "", "", "", "#adios2", "%10"};
+    string entrada[4] = {"100", "k", "/discoPrueba1.disk", "ff"};
+    string entrada1[8] = {"30", "k", "/discoPrueba1.disk", "p", "ff", "", "#", "adios"};
+    string entrada2[8] = {"10", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios1", ""};
+    string entrada3[8] = {"1", "k", "/discoPrueba1.disk", "l", "ff", "", "#adios2", ""};
+    string entrada5[8] = {"1", "k", "/discoPrueba1.disk", "l", "ff", "", "#adios3", ""};
+    string entrada4[8] = {"", "k", "/discoPrueba1.disk", "", "", "", "#adios1", "%10"};
     string entradaMKFS1[3] = {"3fs", "fast", "891A"};
     string entradaMKFS2[3] = {"2fs", "fast", "892A"};
 
@@ -49,7 +50,8 @@ int main() {
     CreateDisk(diskConstructor(entrada));
     makePartition(separarParams(entrada1));
     makePartition(separarParams(entrada2));
-    makePartition(separarParams(entrada3));
+//    makePartition(separarParams(entrada3));
+//    makePartition(separarParams(entrada5));
     makePartition(separarParams(entrada4));
     Mount("/discoPrueba1.disk", "adios");
     Mount("/discoPrueba1.disk", "adios1");
@@ -57,7 +59,7 @@ int main() {
     mkfsMethod(separarParamsMKFS(entradaMKFS1));
     mkfsMethod(separarParamsMKFS(entradaMKFS2));
     reporteDisk("/discoPrueba1.disk", "891A");
-    leerArchivo("/entradas/entrada.txt");
+//    leerArchivo("/entradas/entrada.txt");
 //    leerEntrada("mkdisk -path=/discoPrueba1.disk -size=300 -u=k");
 //     leerEntrada("rmdisk -path=/discoPrueba1.disk");
 
@@ -80,4 +82,4 @@ int main() {
 // }
 
 //todo para hacer la ejecucion de comandos directos, lo unico que tengo que hacer es cambiar el string entrada en el leer entrada, tengo que poner un cin
-//todo hacer el exec
+// todo tengo que hacer prubas de add en las particiones, principalmente si no cabe, o hay que reposicionar

@@ -104,7 +104,6 @@ void makePartition(ParamsFDisk params) {
     cout << "Signature: " << mbr.diskSignature << endl;
     cout << "Tamano: " << mbr.size << endl;
     cout << "Fit: " << mbr.fit << endl;
-    cout << "inicio 1 " << mbr.partition[0].status << endl;
 
     int index = 0;
     bool existente = false;
@@ -129,8 +128,11 @@ void makePartition(ParamsFDisk params) {
     }
     if (add == 0 && del == "") {
         if (mbr.partition[index].status == '0') {
-            mbr.partition[index].status = '1';
-            mbr.partition[index].size = size;
+
+            if (type == 'p' || type == 'e') {
+                mbr.partition[index].status = '1';
+                mbr.partition[index].size = size;
+            }
             if (fit == "bf") {
                 mbr.partition[index].fit = 'b';
             } else if (fit == "wf") {
@@ -142,11 +144,20 @@ void makePartition(ParamsFDisk params) {
                 if (type == 'p') {
                     mbr.partition[index].type = 'p';
                 } else {
+                    bool existExtended = false;
+                    for (int v = 0; v < 4; ++v) {
+                        if (mbr.partition[v].type == 'e') {
+                            existExtended = true;
+                        }
+                    }
+                    if (existExtended) {
+                        cout << "ya existe una particion extendida no se puede crear otra" << endl;
+                        return;
+                    }
                     mbr.partition[index].type = 'e';
                 }
 
                 if (mbr.partition[index].fit == 'f') {
-                    //todoS este es para los primaria, tengo que ver como hacerlo para las extendidas y como hacerlo para las logicas
                     bool trigger = false;
                     for (int i = 0; i < 4; i++) {
                         for (int j = 0; j < 4; j++) {
@@ -246,9 +257,51 @@ void makePartition(ParamsFDisk params) {
                     }
                 }
             } else {
+                file = fopen(sc, "rb+");
+                bool existExtended = false;
+                int indexExtended = 0;
+                for (int v = 0; v < 4; ++v) {
+                    if (mbr.partition[v].type == 'e') {
+                        existExtended = true;
+                        indexExtended = v;
+                    }
+                }
+                if (!existExtended) {
+                    cout << "no se puede crear una particion logica porque no existe ninguna particion extendida"
+                         << endl;
+                    return;
+                }
+                EBR logicPartition;
+                logicPartition.size = size;
+                logicPartition.name = name;
+                fseek(file, mbr.partition[indexExtended].start + 1, SEEK_SET);
+                EBR auxiliar;
+                fread(&auxiliar, sizeof(EBR), 1, file);
+                int startExistente = 0;
+                while (auxiliar.siguiente == (auxiliar.start + auxiliar.size + 1)) {
+                    startExistente = auxiliar.start;
+                    fseek(file, auxiliar.siguiente, SEEK_SET);
+                    fread(&auxiliar, sizeof(auxiliar), 1, file);
+                }
+                if (startExistente != 0) {
+                    fseek(file, startExistente, SEEK_SET);
+                    fread(&auxiliar, sizeof(auxiliar), 1, file);
+                    logicPartition.start = auxiliar.siguiente;
+                    logicPartition.siguiente = logicPartition.start + logicPartition.size + 1;
+                } else {
+                    logicPartition.start = mbr.partition[indexExtended].start + 1;
+                    logicPartition.siguiente = logicPartition.start + logicPartition.size + 1;
+                }
+                fseek(file, logicPartition.start, SEEK_SET);
+                fwrite(&logicPartition, sizeof(EBR), 1, file);
+                cout<<"particion logica creada con exito"<<endl;
+                auxiliar = logicPartition;
             }
-            strcpy(mbr.partition[index].name, name.c_str());
-            cout << "particion creada con exito" << endl;
+            if (type == 'p' || type == 'e') {
+                strcpy(mbr.partition[index].name, name.c_str());
+                cout <<"la particion "<<mbr.partition[index].name <<" comienza en "<<mbr.partition[index].start<<endl;
+                cout << "particion creada con exito " << mbr.partition[index].name << endl;
+            }
         } else {
             cout << "no se puede crear una particion" << endl;
             cout << mbr.partition[index].status << endl;
@@ -263,7 +316,7 @@ void makePartition(ParamsFDisk params) {
             for (int i = 0; i < mbr.partition[index].size; ++i) {
                 fwrite("\0", 1, 1, file);
             }
-            cout<<mbr.partition[index].size<< "tamano de la particion que voy a eliminar"<<endl;
+            cout << mbr.partition[index].size << "tamano de la particion que voy a eliminar" << endl;
             mbr.partition[index].status = '0';
             mbr.partition[index].size = 0;
             mbr.partition[index].fit = 'f';

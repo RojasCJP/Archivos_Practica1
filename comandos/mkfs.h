@@ -2,6 +2,8 @@
 #include "fdisk.h"
 #include <math.h>
 
+void createUsers();
+
 using namespace std;
 
 struct ParamsMKFS {
@@ -189,6 +191,37 @@ void mkfsMethod(ParamsMKFS params) {
     fwrite(&SBnuevo, sizeof(SuperBlock), 1, file);
     fclose(file);
     cout << "se formateo la particion" << endl;
+
+    createUsers();
+    cout<<"se creo la carpeta raiz"<<endl;
+    SBnuevo.freeBlocksCount =SBnuevo.freeBlocksCount-1;
+    SBnuevo.freeInodesCount =SBnuevo.freeInodesCount-1;
+    SBnuevo.firstInode = 1;
+    SBnuevo.firstBlock = 1;
+    SBnuevo.inodesCount = 1;
+    SBnuevo.blocksCount = 1;
+}
+
+void createUsers() {
+    BLOCK_DIR newDir;
+    INODO newInode;
+    newDir.content[0].inodo = 0;
+    newDir.content[1].inodo = 0;
+    strcpy(newDir.content[0].name,"..");
+    strcpy(newDir.content[1].name , ".");
+    newDir.content[2];
+    newDir.content[3];
+
+    newInode.type = '0';
+    newInode.uid= 0;
+    newInode.gid=0;
+    newInode.size = 0;
+    newInode. block[0] = 0;
+    newInode. block[1];
+    newInode. block[2];
+    newInode. block[3];
+    newInode. block[4];
+    //todo creo que tengo que escribir estos en el archivo, eso ya esta creo
 }
 
 //todo tengo que jalar lo de la carpeta root

@@ -223,3 +223,5 @@ void reporteMBR(string spath,string id) {
     string reporteCompleto = inicioReporte+medioReporte+finalReporte;
     cout<<reporteCompleto<<endl;
 }
+
+//todo hacer el reporte con los ebr y mostrarlos en el reporte de disco

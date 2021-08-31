@@ -5,13 +5,13 @@ string rpath = "/home/juanpa/Documents";
 
 struct INODO {
     int uid;
-    int fld;
+    int gid;
     time_t atime;
     time_t ctime;
     time_t mtime;
     int block[15];
     char type;
-    int perm;
+    int size;
 };
 
 struct BLOCK_FILE {
@@ -89,6 +89,13 @@ struct MBR {
     Partition partition[4];
 };
 
+struct EBR{
+    int size;
+    int start;
+    int siguiente;
+    string name;
+};
+
 struct ParamsFDisk {
     int size;
     char units;
@@ -97,7 +104,7 @@ struct ParamsFDisk {
     string fit;
     string del;
     string name;
-    int add;
+    int add=0;
 };
 
 bool ExistName(string name, MBR mbr) {
