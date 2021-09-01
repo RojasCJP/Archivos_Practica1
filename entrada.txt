@@ -1,0 +1,3 @@
+rmdisk -path=/home/juanpa/Documents/discoPrueba1.disk
+mkdisk -path=/home/juanpa/Documents/discoPrueba1.disk -size=300 -u=K
+fdisk –Size=30 -u=K –path=/home/juanpa/Documents/discoPrueba1.disk –name=Particion1
