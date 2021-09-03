@@ -38,7 +38,7 @@ int leerArchivo(string nombreArchivo) {
 int main() {
     cout << "a ver si ahorita si se le antoja jalar" << endl;
     string entrada[4] = {"100", "k", "/discoPrueba1.disk", "ff"};
-    string entrada1[8] = {"30", "k", "/discoPrueba1.disk", "p", "ff", "", "#", "adios"};
+    string entrada1[8] = {"30", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios", ""};
     string entrada2[8] = {"10", "k", "/discoPrueba1.disk", "p", "ff", "", "#adios1", ""};
     string entrada3[8] = {"1", "k", "/discoPrueba1.disk", "l", "ff", "", "#adios2", ""};
     string entrada5[8] = {"1", "k", "/discoPrueba1.disk", "l", "ff", "", "#adios3", ""};
@@ -57,8 +57,11 @@ int main() {
     Mount("/discoPrueba1.disk", "adios1");
 //    Unmount("891A");
     mkfsMethod(separarParamsMKFS(entradaMKFS1));
-    mkfsMethod(separarParamsMKFS(entradaMKFS2));
+//    mkfsMethod(separarParamsMKFS(entradaMKFS2));
     reporteDisk("/discoPrueba1.disk", "891A");
+    reportBitmap(1,"/discoprueba1.disk","adios","/home/juanpa/Documents/particion1.txt");
+    reportBitmap(0,"/discoprueba1.disk","adios","/home/juanpa/Documents/particion2.txt");
+    reportSuperBlock("/discoprueba1.disk","adios","asdf");
 //    leerArchivo("/entradas/entrada.txt");
 //    leerEntrada("mkdisk -path=/discoPrueba1.disk -size=300 -u=k");
 //     leerEntrada("rmdisk -path=/discoPrueba1.disk");

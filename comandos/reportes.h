@@ -224,4 +224,208 @@ void reporteMBR(string spath,string id) {
     cout<<reporteCompleto<<endl;
 }
 
+bool reportBitmap(int rep, char path[], char name[],char path_rep[]){
+    string completePath = rpath+path;
+    char sc[completePath.size() + 1];
+    strcpy(sc, completePath.c_str());
+    SuperBlock *sb = readSuperBlock(sc,name);
+    if(sb == NULL){
+        return false;
+    }
+    FILE * myFile;
+    myFile = fopen (sc,"rb+");
+    if (myFile==NULL)
+    {
+        cout<<"Error al abrir el disco\n";
+        return false;
+    }
+
+    FILE * fileReport;
+    fileReport = fopen (path_rep,"w+");
+    if (fileReport==NULL)
+    {
+        cout<<"Error al crear archivo de reporte\n";
+        return false;
+    }
+    fseek(fileReport, 0, SEEK_SET);
+    if(rep == 0){
+        //reporte de inodos
+        char caracter;
+        int contador = 0;
+        fseek(myFile, sb->bmInodeStart, SEEK_SET);
+        while(contador<sb->inodesCount){
+            fread(&caracter, sizeof(char), 1, myFile);
+            fwrite(&caracter, sizeof(char), 1, fileReport);
+            if((contador+1)%20==0 && contador!=0){
+                fwrite("\n", sizeof(char), 1, fileReport);
+            }
+            contador++;
+        }
+    }else{
+        //reporte de bloques
+        char caracter;
+        int contador = 0;
+        fseek(myFile, sb->bmBlockStart, SEEK_SET);
+        while(contador<sb->blocksCount){
+            fread(&caracter, sizeof(char), 1, myFile);
+            fwrite(&caracter, sizeof(char), 1, fileReport);
+            if((contador+1)%20==0 && contador!=0){
+                fwrite("\n", sizeof(char), 1, fileReport);
+            }
+            contador++;
+        }
+    }
+    fclose (fileReport);
+    fclose (myFile);
+    delete sb;
+    return true;
+}
+
+bool reportSuperBlock(char path[], char name[],char path_rep[]){
+    string completePath = rpath+path;
+    char sc[completePath.size() + 1];
+    strcpy(sc, completePath.c_str());
+    SuperBlock *sb = readSuperBlock(sc,name);
+    string reporteBody = "digraph test {\n"
+                         "    graph [ratio=fill];\n"
+                         "    node [label=\"\\N\", fontsize=15, shape=plaintext];\n"
+                         "    graph [bb=\"0,0,352,154\"];\n"
+                         "    arset [label=<\n"
+                         "        <TABLE ALIGN=\"LEFT\">\n"
+                         "            <TR>\n"
+                         "                <TD>Nombre</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>Valor</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Inodes Count</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+to_string(sb->inodesCount)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Blocks Count</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->blocksCount)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "           <TR>\n"
+                         "                <TD>Free Inodes Count</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->freeInodesCount)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Free Blocks Count</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->freeBlocksCount)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Mtime</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+asctime(gmtime(&sb->mtime))+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Umtime</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+asctime(gmtime(&sb->umtime))+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Magic</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+to_string(sb->magic)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Inode Size</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->inodeSize)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Block Size</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->blockSize)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>First Inode</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->firstInode)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Frist Block</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->firstBlock)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>BM Inode Start</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->bmInodeStart)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>BM Block Start</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->bmBlockStart)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Inode Start</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->inodeStart)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "            <TR>\n"
+                         "                <TD>Block Start</TD>\n"
+                         "                <TD>\n"
+                         "                    <TABLE BORDER=\"0\">\n"
+                         "                        <TR><TD>"+ to_string(sb->blockStart)+"</TD></TR>\n"
+                         "                    </TABLE>\n"
+                         "                </TD>\n"
+                         "            </TR>\n"
+                         "        </TABLE>\n"
+                         "    >, ];\n"
+                         "}";
+                         cout<<reporteBody<<endl;
+                         return true;
+}
+
+
 //todo hacer el reporte con los ebr y mostrarlos en el reporte de disco

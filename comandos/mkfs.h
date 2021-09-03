@@ -326,6 +326,31 @@ SuperBlock *readSuperBlock(char path[], char name[], int *startSb) {
     return sb;
 }
 
+SuperBlock* readSuperBlock(char path[], char name[]){
+    MBR *disco = openMBR(path);
+    if(disco==NULL){
+        std::cout<<"Error al leer el disco\n";
+        return NULL;
+    }
+    int init;
+    bool res = getStartPartition(disco,name,&init);
+    if(res!=true){
+        return NULL;
+    }
+    delete disco;
+    FILE *myFile = fopen(path,"rb+");
+    if(myFile==NULL){
+        cout<<"Error al abrir el disco \n";
+        return NULL;
+    }
+    SuperBlock *sb = (SuperBlock*)malloc(sizeof(SuperBlock));
+
+    fseek(myFile, init, SEEK_SET);
+    fread(sb, sizeof(SuperBlock), 1, myFile);
+    fclose(myFile);
+    return sb;
+}
+
 INODO *readInodo(char path[], int init) {
     FILE *myFile = fopen(path, "rb+");
     if (myFile == NULL) {

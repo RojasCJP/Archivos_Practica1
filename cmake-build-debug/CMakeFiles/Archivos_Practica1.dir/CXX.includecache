@@ -37,6 +37,8 @@ fdisk.h
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/fdisk.h
 math.h
 -
+sstream
+-
 
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
 iostream
