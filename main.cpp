@@ -62,6 +62,8 @@ int main() {
     reportBitmap(1,"/discoprueba1.disk","adios","/home/juanpa/Documents/particion1.txt");
     reportBitmap(0,"/discoprueba1.disk","adios","/home/juanpa/Documents/particion2.txt");
     reportSuperBlock("/discoprueba1.disk","adios","asdf");
+    reportInodes("/home/juanpa/Documents/discoprueba1.disk","adios","/home/juanpa/Documents/inodos.png");
+    reportBlocks("/home/juanpa/Documents/discoprueba1.disk","adios","/home/juanpa/Documents/bloques.png");
 //    leerArchivo("/entradas/entrada.txt");
 //    leerEntrada("mkdisk -path=/discoPrueba1.disk -size=300 -u=k");
 //     leerEntrada("rmdisk -path=/discoPrueba1.disk");

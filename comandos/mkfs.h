@@ -910,6 +910,7 @@ void mkfsMethod(ParamsMKFS params) {
     char pathdir[path.size() + 1];
     strcpy(pathdir, path.c_str());
     writeDirectory(&SBnuevo, pathdir, "/", "/", 0);
+    writeDirectory(&SBnuevo, pathdir, "/root", "/", 0);
     fseek(file, start, SEEK_SET);
     fwrite(&SBnuevo, sizeof(SuperBlock), 1, file);
     fclose(file);
@@ -918,6 +919,7 @@ void mkfsMethod(ParamsMKFS params) {
     char namecrt[name.size()+1];
     strcpy(namecrt, name.c_str());
     createFileWithText("/users.txt", true, users, 28, pathdir, namecrt);
+    createFileWithText("/root/prueba.txt",true,"buenas tardes\n",14,pathdir,namecrt);
     cout << "se creo la carpeta raiz" << endl;
     SBnuevo.freeBlocksCount = SBnuevo.freeBlocksCount - 1;
     SBnuevo.freeInodesCount = SBnuevo.freeInodesCount - 1;
