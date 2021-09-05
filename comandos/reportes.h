@@ -932,9 +932,9 @@ bool reportBlocks(char path[], char name[], char path_report[]) {
 }
 
 
-bool reportFile() {}
+bool reportFile() {return true;}
 
-bool reportTree() {}
+bool reportTree() {return true;}
 //todo este no creo poder hacerlo pero se hara el intento
 
 //todo hacer el reporte con los ebr y mostrarlos en el reporte de disco

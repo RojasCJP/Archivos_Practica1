@@ -1,3 +1,7 @@
-rmdisk -path=/home/juanpa/Documents/discoPrueba1.disk
-mkdisk -path=/home/juanpa/Documents/discoPrueba1.disk -size=300 -u=K
-fdisk –Size=30 -u=K –path=/home/juanpa/Documents/discoPrueba1.disk –name=Particion1
+rmdisk -path=/discoPrueba1.disk
+mkdisk -size=300 -path=/discoPrueba1.disk -u=K
+fdisk -size=30 -u=K -path=/discoPrueba1.disk -name=Particion1 -type=p
+fdisk -add=10 -u=K -path=/discoPrueba1.disk -name=Particion1
+mount -path=/discoPrueba1.disk -name=Particion1
+mkfs -id=891A -type=fast -fs=2fs
+rep -name=mbr -id=891A -path=/holakase.disk

@@ -278,6 +278,9 @@ string getNameMount(string params[4])
     for (int i = 0; i < 4; i++)
     {
         datos[i] = params[i];
+        for (int j = 0; j < datos[i].length(); ++j) {
+            datos[i][j] = tolower(params[i][j]);
+        }
         if (datos[i][0] != '/' && datos[i][0] != '"')
         {
             return datos[i];

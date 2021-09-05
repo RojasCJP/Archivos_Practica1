@@ -33,9 +33,9 @@ b_2[ shape=plaintext label=<
 </td></tr>
 </table>
 >];
-b_240[ shape=plaintext label=< 
+b_699[ shape=plaintext label=< 
 <table border='0' cellborder='1' cellspacing='0'>
-<tr><td port="25272" colspan="3">Bloque 240</td></tr>
+<tr><td port="73008" colspan="3">Bloque 699</td></tr>
 <tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >root</td></tr>
 <tr><td bgcolor="#e5b7ff">b_inodo</td><td bgcolor="#e5b7ff">3</td></tr>
 <tr><td bgcolor="#c0ffb7">b_name</td><td bgcolor="#c0ffb7" port="ib0">/</td></tr>
