@@ -19,12 +19,15 @@ int yyerror(const char* msg){
 std::string parametros[4];
 std::string parametros8[8];
 std::string parametros3[3];
+std::string parametros5[5];
 int getIndex(string params[4]);
 void inicializarArreglo(string params[4]);
 int getIndex8(string params[8]);
 void inicializarArreglo8(string params[8]);
 int getIndex3(string params[3]);
 void inicializarArreglo3(string params[3]);
+int getIndex5(string params[5]);
+void inicializarArreglo5(string params[5]);
 %}
 
 %define parse.error verbose
@@ -199,11 +202,12 @@ PARAMMOUNT: path igual e_path {strcpy($$, $3);}
 F_UNMOUNT: unmount id igual e_id {Unmount($4);}
 ;
 
-F_MKFS: mkfs PARAMSMKFS {mkfsMethod(separarParamsMKFS(parametros3));}
+F_MKFS: mkfs PARAMSMKFS {mkfsMethod(separarParamsMKFS(parametros3));
+inicializarArreglo3(parametros3);}
 ;
 
 PARAMSMKFS: PARAMMKFS PARAMSMKFS {parametros3[getIndex3(parametros3)]=$1;}
-        |PARAMMKFS {{parametros3[getIndex3(parametros3)]=$1;}}
+        |PARAMMKFS {parametros3[getIndex3(parametros3)]=$1;}
 ;
 
 PARAMMKFS: id igual e_id {strcpy($$, $3);}
@@ -211,11 +215,12 @@ PARAMMKFS: id igual e_id {strcpy($$, $3);}
         |fs igual password {strcpy($$, $3);}
 ;
 
-F_REP: rep PARAMSREP {cout<<"si llega a hacer los reportes"<<endl;}
+F_REP: rep PARAMSREP {makeReports(parametros5);
+inicializarArreglo5(parametros5);}
 ;
 
-PARAMSREP: PARAMREP PARAMSREP {cout<<$1<<endl;}
-            |PARAMREP {cout<<$1<<endl;}
+PARAMSREP: PARAMREP PARAMSREP {parametros5[getIndex5(parametros5)]=$1;}
+            |PARAMREP {parametros5[getIndex5(parametros5)]=$1;}
 ;
 
 PARAMREP: name igual e_name {strcpy($$, $3);}
@@ -383,6 +388,21 @@ int getIndex3(string params[3]){
 
 void inicializarArreglo3(string params[3]){
         for(int i = 0; i<3;i++){
+                params[i]="";
+        }
+}
+
+int getIndex5(string params[5]){
+        for(int i = 0; i<5; i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
+
+void inicializarArreglo5(string params[5]){
+        for(int i = 0; i<5;i++){
                 params[i]="";
         }
 }

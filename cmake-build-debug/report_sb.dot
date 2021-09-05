@@ -1,0 +1,139 @@
+digraph test {
+    graph [ratio=fill];
+    node [label="\N", fontsize=15, shape=plaintext];
+    graph [bb="0,0,352,154"];
+    arset [label=<
+        <TABLE ALIGN="LEFT">
+            <TR>
+                <TD>Nombre</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Valor</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Inodes Count</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>233</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Blocks Count</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>699</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+           <TR>
+                <TD>Free Inodes Count</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>228</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Free Blocks Count</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>694</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Mtime</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Sun Sep  5 22:47:22 2021
+</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Umtime</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Sun Sep  5 22:47:22 2021
+</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Magic</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>0</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Inode Size</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>104</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Block Size</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>64</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>First Inode</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>5</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Frist Block</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>699</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>BM Inode Start</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>218</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>BM Block Start</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>451</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Inode Start</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>24683</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Block Start</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>69419</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+        </TABLE>
+    >, ];
+}

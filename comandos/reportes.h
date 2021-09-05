@@ -15,115 +15,117 @@ void graphBlockFile(BLOCK_FILE *block, int initBlock, FILE *myFile, int indexIno
 void graphBlockDirectory(BLOCK_DIR *block, int initBlock, FILE *myFile, int indexInodo, SuperBlock *sb, char path[],
                          bool graphConnection);
 
-BLOCK_FILE* readBlockFile(char path[], int init){
-    FILE *myFile = fopen(path,"rb+");
-    if(myFile==NULL){
-        cout<<"Error al abrir el disco \n";
+BLOCK_FILE *readBlockFile(char path[], int init) {
+    FILE *myFile = fopen(path, "rb+");
+    if (myFile == NULL) {
+        cout << "Error al abrir el disco \n";
         return NULL;
     }
-    BLOCK_FILE *bd = (BLOCK_FILE*)malloc(sizeof(BLOCK_FILE));
+    BLOCK_FILE *bd = (BLOCK_FILE *) malloc(sizeof(BLOCK_FILE));
     fseek(myFile, init, SEEK_SET);
     fread(bd, sizeof(BLOCK_FILE), 1, myFile);
     fclose(myFile);
     return bd;
 }
 
-void graphInodo(INODO* inodo,int indexInodo,FILE *myFile,char path[],SuperBlock *sb){
-    if(inodo==NULL) return;
-    fputs("i_",myFile);
-    fputs(&to_string(indexInodo)[0],myFile);
+void graphInodo(INODO *inodo, int indexInodo, FILE *myFile, char path[], SuperBlock *sb) {
+    if (inodo == NULL) return;
+    fputs("i_", myFile);
+    fputs(&to_string(indexInodo)[0], myFile);
     fputs("[ shape=plaintext label=< \n", myFile);
     fputs("<table border='0' cellborder='1' cellspacing='0'>\n", myFile);
-    fputs("<tr><td ",myFile);
-    fputs("port=\"ib",myFile);
-    fputs(&to_string(indexInodo*sizeof(INODO))[0],myFile);
-    fputs("\"",myFile);
-    fputs(" colspan=\"3\">Inodo ",myFile);
-    fputs(&to_string(indexInodo)[0],myFile);
+    fputs("<tr><td ", myFile);
+    fputs("port=\"ib", myFile);
+    fputs(&to_string(indexInodo * sizeof(INODO))[0], myFile);
+    fputs("\"", myFile);
+    fputs(" colspan=\"3\">Inodo ", myFile);
+    fputs(&to_string(indexInodo)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_uid</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(&to_string(inodo->uid)[0],myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_uid</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(&to_string(inodo->uid)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_gid</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(&to_string(inodo->gid)[0],myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_gid</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(&to_string(inodo->gid)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_size</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(&to_string(inodo->size)[0],myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_size</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(&to_string(inodo->size)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_atime</td><td bgcolor=\"#fbffa8\">",myFile);
-        fputs(asctime(gmtime(&inodo->atime)),myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_atime</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(asctime(gmtime(&inodo->atime)), myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_ctime</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(asctime(gmtime(&inodo->ctime)),myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_ctime</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(asctime(gmtime(&inodo->ctime)), myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_mtime</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(asctime(gmtime(&inodo->mtime)),myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_mtime</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(asctime(gmtime(&inodo->mtime)), myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_type</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(&to_string(inodo->type)[0],myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_type</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(&to_string(inodo->type)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    fputs("<tr><td bgcolor=\"#fbffa8\">i_perm</td><td bgcolor=\"#fbffa8\">",myFile);
-    fputs(&to_string(inodo->permisos)[0],myFile);
+    fputs("<tr><td bgcolor=\"#fbffa8\">i_perm</td><td bgcolor=\"#fbffa8\">", myFile);
+    fputs(&to_string(inodo->permisos)[0], myFile);
     fputs("</td></tr>\n", myFile);
-    int i=0;
+    int i = 0;
     //APUNTADORES DIRECTOS
-    while(i<12){
+    while (i < 12) {
         fputs("<tr><td bgcolor=\"#ffd1a8\">AD", myFile);
-        fputs(&to_string(i+1)[0],myFile);
-        fputs("</td><td ",myFile);
-        if(inodo->block[i]!=-1){
-            fputs("port=\"",myFile);
-            fputs(&to_string((indexInodo+inodo->block[i])*sizeof(INODO))[0],myFile);
-            fputs("\"",myFile);
+        fputs(&to_string(i + 1)[0], myFile);
+        fputs("</td><td ", myFile);
+        if (inodo->block[i] != -1) {
+            fputs("port=\"", myFile);
+            fputs(&to_string((indexInodo + inodo->block[i]) * sizeof(INODO))[0], myFile);
+            fputs("\"", myFile);
         }
-        fputs(" bgcolor=\"#ffd1a8\">",myFile);
-        fputs(&to_string(inodo->block[i])[0],myFile);
+        fputs(" bgcolor=\"#ffd1a8\">", myFile);
+        fputs(&to_string(inodo->block[i])[0], myFile);
         fputs("</td></tr>\n", myFile);
         i++;
     }
 
-    while (i<15) {
+    while (i < 15) {
         fputs("<tr><td bgcolor=\"#a8ffdf\">AI", myFile);
-        fputs(&to_string(i-11)[0],myFile);
-        fputs("</td><td ",myFile);
-        if(inodo->block[i]!=-1){
-            fputs("port=\"",myFile);
-            fputs(&to_string((indexInodo+inodo->block[i])*sizeof(INODO))[0],myFile);
-            fputs("\"",myFile);
+        fputs(&to_string(i - 11)[0], myFile);
+        fputs("</td><td ", myFile);
+        if (inodo->block[i] != -1) {
+            fputs("port=\"", myFile);
+            fputs(&to_string((indexInodo + inodo->block[i]) * sizeof(INODO))[0], myFile);
+            fputs("\"", myFile);
         }
-        fputs(" bgcolor=\"#a8ffdf\">",myFile);
-        fputs(&to_string(inodo->block[i])[0],myFile);
+        fputs(" bgcolor=\"#a8ffdf\">", myFile);
+        fputs(&to_string(inodo->block[i])[0], myFile);
         fputs("</td></tr>\n", myFile);
         i++;
     }
 
-    fputs("</table>\n",myFile);
-    fputs(">];\n",myFile);
+    fputs("</table>\n", myFile);
+    fputs(">];\n", myFile);
 
     //GRAFICAR BLOQUES
-    i=0;
-    while(i<12){
-        if(inodo->block[i]!=-1){
-            int pos = getInitBlock(sb,inodo->block[i]);
-            if(inodo->type == 1){
-                BLOCK_DIR *dir = readBlockDirectory(path,pos);
-                if(dir!=NULL){
-                    graphBlockDirectory(dir,inodo->block[i],myFile,indexInodo,sb,path,true);
+    i = 0;
+    while (i < 12) {
+        if (inodo->block[i] != -1) {
+            int pos = getInitBlock(sb, inodo->block[i]);
+            if (inodo->type == 1) {
+                BLOCK_DIR *dir = readBlockDirectory(path, pos);
+                if (dir != NULL) {
+                    graphBlockDirectory(dir, inodo->block[i], myFile, indexInodo, sb, path, true);
                 }
-            }else if(inodo->type == 0){
-                BLOCK_FILE *dir = readBlockFile(path,pos);
-                if(dir!=NULL){
-                    graphBlockFile(dir,inodo->block[i],myFile,indexInodo);
+            } else if (inodo->type == 0) {
+                BLOCK_FILE *dir = readBlockFile(path, pos);
+                if (dir != NULL) {
+                    graphBlockFile(dir, inodo->block[i], myFile, indexInodo);
                 }
             }
-            graphConnectionInodoBloque(indexInodo,inodo->block[i],(indexInodo+inodo->block[i])*sizeof(INODO),myFile);
+            graphConnectionInodoBloque(indexInodo, inodo->block[i], (indexInodo + inodo->block[i]) * sizeof(INODO),
+                                       myFile);
         }
         i++;
     }
-    while(i<15){
-        if(inodo->block[i]!=-1){
-            graphBlockPointer(i-11,indexInodo,inodo->block[i],myFile,path,sb,true,inodo->type);
-            graphConnectionInodoBloque(indexInodo,inodo->block[i],(indexInodo+inodo->block[i])*sizeof(INODO),myFile);
+    while (i < 15) {
+        if (inodo->block[i] != -1) {
+            graphBlockPointer(i - 11, indexInodo, inodo->block[i], myFile, path, sb, true, inodo->type);
+            graphConnectionInodoBloque(indexInodo, inodo->block[i], (indexInodo + inodo->block[i]) * sizeof(INODO),
+                                       myFile);
         }
         i++;
     }
@@ -340,11 +342,11 @@ string convertToString(char *a) {
 void reporteDisk(string spath, string id) {
     string path = getPathDisk(id);
     string pathOutput = spath;
-    for (int i = 0; i < path.length(); i++) {
-        path[i] = tolower(spath[i]);
-    }
+//    for (int i = 0; i < path.length(); i++) {
+//        path[i] = tolower(spath[i]);
+//    }
 
-    string completePath = rpath + path;
+    string completePath = path;
     if (!exist_file(completePath)) {
         cout << "disco no encontrado" << endl;
     }
@@ -418,18 +420,30 @@ void reporteDisk(string spath, string id) {
     string finalReporte = "}\"] ;\n    }\n}";
 
     string reporteCompleto = inicioReporte + discoReporte + medioReporte + finalReporte;
-    //todo tengo que hacer que corra el graphviz para que genere el archivo
+    FILE *fileReport;
+    fileReport = fopen("report_disk.dot", "w+");
+    if (fileReport == NULL) {
+        cout << "Error al crear archivo de reporte\n";
+        return;
+    }
+    fseek(fileReport, 0, SEEK_SET);
+    fputs(reporteCompleto.c_str(), fileReport);
+    fclose(fileReport);
+//    string pathString(path_rep);
+    string command = "dot -Tpng report_disk.dot -o \"" + pathOutput + "\"";//+"/report_mbr.png";
+    system(command.c_str());
+
     cout << reporteCompleto << endl;
 }
 
 void reporteMBR(string spath, string id) {
     string path = getPathDisk(id);
     string pathOutput = spath;
-    for (int i = 0; i < path.length(); i++) {
-        path[i] = tolower(spath[i]);
-    }
+//    for (int i = 0; i < path.length(); i++) {
+//        path[i] = tolower(path[i]);
+//    }
 
-    string completePath = rpath + path;
+    string completePath =  path;
     if (!exist_file(completePath)) {
         cout << "disco no encontrado" << endl;
     }
@@ -551,11 +565,30 @@ void reporteMBR(string spath, string id) {
         }
     }
     string reporteCompleto = inicioReporte + medioReporte + finalReporte;
+    FILE *fileReport;
+    fileReport = fopen("report_mbr.dot", "w+");
+    if (fileReport == NULL) {
+        cout << "Error al crear archivo de reporte\n";
+        return;
+    }
+    fseek(fileReport, 0, SEEK_SET);
+    fputs(reporteCompleto.c_str(), fileReport);
+    fclose(fileReport);
+//    string pathString(path_rep);
+    string command = "dot -Tpng report_mbr.dot -o \"" + pathOutput + "\"";//+"/report_mbr.png";
+    system(command.c_str());
+
     cout << reporteCompleto << endl;
 }
 
-bool reportBitmap(int rep, char path[], char name[], char path_rep[]) {
-    string completePath = rpath + path;
+bool reportBitmap(int rep, string id, char path_rep[]) {
+    string pathString = getPathDisk(id);
+    char path[pathString.size() + 1];
+    strcpy(path, pathString.c_str());
+    string nameString = getNamePartition(id);
+    char name[nameString.size() + 1];
+    strcpy(name, nameString.c_str());
+    string completePath = path;
     char sc[completePath.size() + 1];
     strcpy(sc, completePath.c_str());
     SuperBlock *sb = readSuperBlock(sc, name);
@@ -608,10 +641,15 @@ bool reportBitmap(int rep, char path[], char name[], char path_rep[]) {
     delete sb;
     return true;
 }
-//todo este tiene que recibir el id en lugar de recibir el path y nombre, creo que tengo los metodos necesarios en el mkfs
 
-bool reportSuperBlock(char path[], char name[], char path_rep[]) {
-    string completePath = rpath + path;
+bool reportSuperBlock(string id, char path_rep[]) {
+    string pathStringg = getPathDisk(id);
+    char path[pathStringg.size() + 1];
+    strcpy(path, pathStringg.c_str());
+    string nameString = getNamePartition(id);
+    char name[nameString.size() + 1];
+    strcpy(name, nameString.c_str());
+    string completePath =  path;
     char sc[completePath.size() + 1];
     strcpy(sc, completePath.c_str());
     SuperBlock *sb = readSuperBlock(sc, name);
@@ -763,11 +801,29 @@ bool reportSuperBlock(char path[], char name[], char path_rep[]) {
                                                                                           "        </TABLE>\n"
                                                                                           "    >, ];\n"
                                                                                           "}";
+    FILE *fileReport;
+    fileReport = fopen("report_sb.dot", "w+");
+    if (fileReport == NULL) {
+        cout << "Error al crear archivo de reporte\n";
+        return false;
+    }
+    fseek(fileReport, 0, SEEK_SET);
+    fputs(reporteBody.c_str(), fileReport);
+    fclose(fileReport);
+    string pathString(path_rep);
+    string command = "dot -Tpng report_sb.dot -o \"" + pathString + "\"";//+"/report_mbr.png";
+    system(command.c_str());
     cout << reporteBody << endl;
     return true;
 }
 
-bool reportInodes(char path[], char name[], char path_report[]) {
+bool reportInodes(string id, char path_report[]) {
+    string pathStringg = getPathDisk(id);
+    char path[pathStringg.size() + 1];
+    strcpy(path, pathStringg.c_str());
+    string nameString = getNamePartition(id);
+    char name[nameString.size() + 1];
+    strcpy(name, nameString.c_str());
     SuperBlock *sb = readSuperBlock(path, name);
     if (sb == NULL) {
         return false;
@@ -867,7 +923,14 @@ bool reportInodes(char path[], char name[], char path_report[]) {
     return true;
 }
 
-bool reportBlocks(char path[], char name[], char path_report[]) {
+bool reportBlocks(string id, char path_report[]) {
+    string pathStringg = getPathDisk(id);
+    char path[pathStringg.size() + 1];
+    strcpy(path, pathStringg.c_str());
+    string nameString = getNamePartition(id);
+    char name[nameString.size() + 1];
+    strcpy(name, nameString.c_str());
+
     SuperBlock *sb = readSuperBlock(path, name);
     if (sb == NULL) {
         return false;
@@ -932,9 +995,61 @@ bool reportBlocks(char path[], char name[], char path_report[]) {
 }
 
 
-bool reportFile() {return true;}
+bool reportFile() { return true; }
 
-bool reportTree() {return true;}
+bool reportTree() { return true; }
+
+struct ParamsReport{
+    string name;
+    string path;
+    string id;
+};
+
+ParamsReport separateParamsReports(string params[5]){
+    ParamsReport paramsReport;
+    for (int i = 0; i < 5; ++i) {
+        if (params[i][0] == '1'||params[i][0] == '2'||params[i][0] == '3'||params[i][0] == '4'||params[i][0] == '5'||params[i][0] == '6'||params[i][0] == '7'||params[i][0] == '8'||params[i][0] == '9'||params[i][0] == '0') {
+            paramsReport.id = params[i];
+        } else if (params[i][0] == '/' || params[i][0] == '"') {
+            paramsReport.path = params[i];
+        } else{
+            if(params[i].size() != 0){
+                paramsReport.name = params[i];
+            }
+        }
+    }
+    return paramsReport;
+}
+
+void makeReports(string params[5]){
+    ParamsReport paramsUtiles = separateParamsReports(params);
+    if(paramsUtiles.name == "mbr"){
+        reporteMBR(paramsUtiles.path,paramsUtiles.id);
+    }else if (paramsUtiles.name == "disk"){
+        reporteDisk(paramsUtiles.path,paramsUtiles.id);
+    }else if(paramsUtiles.name == "inode"){
+        char pathreport[paramsUtiles.path.size()+1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        reportInodes(paramsUtiles.id,pathreport);
+    }else if( paramsUtiles.name == "block"){
+        char pathreport[paramsUtiles.path.size()+1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        reportBlocks(paramsUtiles.id,pathreport);
+    }else if (paramsUtiles.name == "sb"){
+        char pathreport[paramsUtiles.path.size()+1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        reportSuperBlock(paramsUtiles.id, pathreport);
+    }else if (paramsUtiles.name == "bm_inode"){
+        char pathreport[paramsUtiles.path.size()+1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        reportBitmap(0,paramsUtiles.id,pathreport);
+    }else if (paramsUtiles.name == "bm_block"){
+        char pathreport[paramsUtiles.path.size()+1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        reportBitmap(1,paramsUtiles.id,pathreport);
+    }
+}
+
 //todo este no creo poder hacerlo pero se hara el intento
 
 //todo hacer el reporte con los ebr y mostrarlos en el reporte de disco
