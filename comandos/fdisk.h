@@ -357,4 +357,3 @@ void makePartition(ParamsFDisk params) {
     fwrite(&mbr, sizeof(MBR), 1, file);
     fclose(file);
 }
-//todo tengo que hacer las particiones logicas

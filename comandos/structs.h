@@ -3,6 +3,66 @@
 using namespace std;
 string rpath = "/home/juanpa/Documents";
 
+class Sesion {
+public:
+    char *user;
+    char *path;
+    char *namePartition;
+    char *id;
+    char *idUser;
+    char *idGrp;
+
+    Sesion() {
+        this->user = NULL;
+        this->path = NULL;
+        this->namePartition = NULL;
+        this->id = NULL;
+        this->idGrp = NULL;
+        this->idUser = NULL;
+    }
+
+    void clear() {
+        user = NULL;
+        path = NULL;
+        namePartition = NULL;
+        id = NULL;
+
+        this->idGrp = NULL;
+        this->idUser = NULL;
+    }
+};
+
+extern Sesion *active_sesion;
+enum Operation {
+    MKDIRECTORY, MKFILE_PATH, MKFILE_SIZE, EMPTY, ADDUSER, ADDGRP, DELUSER, DELGRP,
+    EDIT_FILE
+};
+
+class Journal {
+public:
+    Operation j_operation;
+    time_t j_date;
+    char *j_path;
+    char *j_content;
+    char *j_user;
+    char *j_group;
+    int j_size;
+    int j_perms;
+    bool j_boolean;
+
+    Journal() {
+        this->j_operation = EMPTY;
+        //this->j_date = NULL;
+        this->j_path = NULL;
+        this->j_content = NULL;
+        this->j_group = NULL;
+        this->j_user = NULL;
+        this->j_size = -1;
+        this->j_perms = -1;
+        this->j_boolean = false;
+    }
+};
+
 struct INODO {
     int uid;
     int gid;
@@ -19,11 +79,11 @@ struct BLOCK_FILE {
     char content[64];
 };
 
-struct BLOCK_POINTER{
+struct BLOCK_POINTER {
     int pointers[16];
 };
 
-struct CONTENT{
+struct CONTENT {
     char name[12];
     int inodo;
 };
@@ -90,7 +150,7 @@ struct MBR {
     Partition partition[4];
 };
 
-struct EBR{
+struct EBR {
     int size;
     int start;
     int siguiente;
@@ -105,7 +165,7 @@ struct ParamsFDisk {
     string fit;
     string del;
     string name;
-    int add=0;
+    int add = 0;
 };
 
 bool ExistName(string name, MBR mbr) {

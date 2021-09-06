@@ -12,3 +12,4 @@ rep -name=block -id=891A -path=/home/juanpa/Documents/block.png
 rep -name=bm_inode -id=891A -path=/home/juanpa/Documents/bminodo.txt
 rep -name=bm_block -id=891A -path=/home/juanpa/Documents/bmblock.txt
 rep -name=sb -id=891A -path=/home/juanpa/Documents/sb.png
+rep -name=tree -id=891A -path=/home/juanpa/Documents/tree.png

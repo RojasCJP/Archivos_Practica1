@@ -87,3 +87,5 @@ void leerEntrada(string entrada) {
 
 //todo para hacer la ejecucion de comandos directos, lo unico que tengo que hacer es cambiar el string entrada en el leer entrada, tengo que poner un cin
 // todo tengo que hacer prubas de add en las particiones, principalmente si no cabe, o hay que reposicionar
+//todo tengo que hacer el mkdir, meterlo en la gramatica, el metodo es writedir
+//todo tengo que hacer el touch, aunque creo que voy a tener que tunear esa onda

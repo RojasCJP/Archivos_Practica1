@@ -443,7 +443,7 @@ void reporteMBR(string spath, string id) {
 //        path[i] = tolower(path[i]);
 //    }
 
-    string completePath =  path;
+    string completePath = path;
     if (!exist_file(completePath)) {
         cout << "disco no encontrado" << endl;
     }
@@ -649,7 +649,7 @@ bool reportSuperBlock(string id, char path_rep[]) {
     string nameString = getNamePartition(id);
     char name[nameString.size() + 1];
     strcpy(name, nameString.c_str());
-    string completePath =  path;
+    string completePath = path;
     char sc[completePath.size() + 1];
     strcpy(sc, completePath.c_str());
     SuperBlock *sb = readSuperBlock(sc, name);
@@ -999,21 +999,23 @@ bool reportFile() { return true; }
 
 bool reportTree() { return true; }
 
-struct ParamsReport{
+struct ParamsReport {
     string name;
     string path;
     string id;
 };
 
-ParamsReport separateParamsReports(string params[5]){
+ParamsReport separateParamsReports(string params[5]) {
     ParamsReport paramsReport;
     for (int i = 0; i < 5; ++i) {
-        if (params[i][0] == '1'||params[i][0] == '2'||params[i][0] == '3'||params[i][0] == '4'||params[i][0] == '5'||params[i][0] == '6'||params[i][0] == '7'||params[i][0] == '8'||params[i][0] == '9'||params[i][0] == '0') {
+        if (params[i][0] == '1' || params[i][0] == '2' || params[i][0] == '3' || params[i][0] == '4' ||
+            params[i][0] == '5' || params[i][0] == '6' || params[i][0] == '7' || params[i][0] == '8' ||
+            params[i][0] == '9' || params[i][0] == '0') {
             paramsReport.id = params[i];
         } else if (params[i][0] == '/' || params[i][0] == '"') {
             paramsReport.path = params[i];
-        } else{
-            if(params[i].size() != 0){
+        } else {
+            if (params[i].size() != 0) {
                 paramsReport.name = params[i];
             }
         }
@@ -1021,35 +1023,75 @@ ParamsReport separateParamsReports(string params[5]){
     return paramsReport;
 }
 
-void makeReports(string params[5]){
+void reportTree(char path_report[], char id[]) {
+    string pathDisk = getPathDisk(id);
+    string namePartition = getNamePartition(id);
+
+    char pathRead[pathDisk.size() + 1];
+    strcpy(pathRead, pathDisk.c_str());
+    char nameRead[namePartition.size() + 1];
+    strcpy(nameRead, namePartition.c_str());
+    SuperBlock *sb = readSuperBlock(pathRead, nameRead);
+    if (sb == NULL) {
+        return;
+    }
+
+    FILE *myFile;
+    myFile = fopen("report_tree.dot", "w+");
+    if (myFile == NULL) {
+        cout << "Error al crear el archivo de reporte\n";
+        return;
+    }
+    fseek(myFile, 0, SEEK_SET);
+    fputs("digraph G {\n", myFile);
+    fputs("rankdir =LR;\n", myFile);
+    //graphAllInodes(sb,myFile,disk->path);
+    INODO *inodo = readInodo(pathRead, getInitInode(sb, 0));
+    if (inodo != NULL) {
+        graphInodo(inodo, 0, myFile, pathRead, sb);
+    }
+    fputs("}\n", myFile);
+    //cerrando stream
+    fclose(myFile);
+    string pathString(path_report);
+    string command = "dot -Tpng report_tree.dot -o \"" + pathString + "\"";//+"/report_disk.png";
+    system(command.c_str());
+}
+
+void makeReports(string params[5]) {
     ParamsReport paramsUtiles = separateParamsReports(params);
-    if(paramsUtiles.name == "mbr"){
-        reporteMBR(paramsUtiles.path,paramsUtiles.id);
-    }else if (paramsUtiles.name == "disk"){
-        reporteDisk(paramsUtiles.path,paramsUtiles.id);
-    }else if(paramsUtiles.name == "inode"){
-        char pathreport[paramsUtiles.path.size()+1];
+    if (paramsUtiles.name == "mbr") {
+        reporteMBR(paramsUtiles.path, paramsUtiles.id);
+    } else if (paramsUtiles.name == "disk") {
+        reporteDisk(paramsUtiles.path, paramsUtiles.id);
+    } else if (paramsUtiles.name == "inode") {
+        char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
-        reportInodes(paramsUtiles.id,pathreport);
-    }else if( paramsUtiles.name == "block"){
-        char pathreport[paramsUtiles.path.size()+1];
+        reportInodes(paramsUtiles.id, pathreport);
+    } else if (paramsUtiles.name == "block") {
+        char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
-        reportBlocks(paramsUtiles.id,pathreport);
-    }else if (paramsUtiles.name == "sb"){
-        char pathreport[paramsUtiles.path.size()+1];
+        reportBlocks(paramsUtiles.id, pathreport);
+    } else if (paramsUtiles.name == "sb") {
+        char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
         reportSuperBlock(paramsUtiles.id, pathreport);
-    }else if (paramsUtiles.name == "bm_inode"){
-        char pathreport[paramsUtiles.path.size()+1];
+    } else if (paramsUtiles.name == "bm_inode") {
+        char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
-        reportBitmap(0,paramsUtiles.id,pathreport);
-    }else if (paramsUtiles.name == "bm_block"){
-        char pathreport[paramsUtiles.path.size()+1];
+        reportBitmap(0, paramsUtiles.id, pathreport);
+    } else if (paramsUtiles.name == "bm_block") {
+        char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
-        reportBitmap(1,paramsUtiles.id,pathreport);
+        reportBitmap(1, paramsUtiles.id, pathreport);
+    } else if (paramsUtiles.name == "tree") {
+        char pathreport[paramsUtiles.path.size() + 1];
+        strcpy(pathreport, paramsUtiles.path.c_str());
+        char idreport[paramsUtiles.id.size() + 1];
+        strcpy(idreport, paramsUtiles.id.c_str());
+        reportTree(pathreport, idreport);
     }
 }
 
-//todo este no creo poder hacerlo pero se hara el intento
 
 //todo hacer el reporte con los ebr y mostrarlos en el reporte de disco

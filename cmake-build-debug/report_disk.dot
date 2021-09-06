@@ -1,7 +1,0 @@
-digraph g {
-        rankdir = LR;
-    subgraph cluster0
-    {
-        Array [ shape = record, label = "{MBR|libre\n0.000007|particio\n0.133333|libre\n0.000003|particio\n0.333333|libre\n0.532881}"] ;
-    }
-}
