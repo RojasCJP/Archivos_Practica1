@@ -18,10 +18,16 @@ int yyerror(const char* msg){
 }
 std::string parametros[4];
 std::string parametros8[8];
+std::string parametros3[3];
+std::string parametros5[5];
 int getIndex(string params[4]);
 void inicializarArreglo(string params[4]);
 int getIndex8(string params[8]);
 void inicializarArreglo8(string params[8]);
+int getIndex3(string params[3]);
+void inicializarArreglo3(string params[3]);
+int getIndex5(string params[5]);
+void inicializarArreglo5(string params[5]);
 %}
 
 %define parse.error verbose
@@ -35,6 +41,9 @@ void inicializarArreglo8(string params[8]);
 %token <text> mount
 %token <text> unmount
 %token <text> mkfs
+%token <text> rep
+%token <text> ruta
+%token <text> root
 %token <text> chmod
 %token <text> touch
 %token <text> cat
@@ -94,6 +103,8 @@ void inicializarArreglo8(string params[8]);
 %type <text> PARAMMK
 %type <text> PARAMMOUNT
 %type <text> PARAMF
+%type <text> PARAMMKFS
+%type <text> PARAMREP
 
 %start START
 %union{
@@ -130,9 +141,10 @@ INICIO: F_MKDISK
         |F_MKDIR
         |F_CP
         |F_MV
+        |F_REP
 ;
 
-F_MKDISK: mkdisk PARAMSMK {cout<<"abr "<<parametros[0]<<parametros[1]<<parametros[2]<<parametros[3]<<endl;
+F_MKDISK: mkdisk PARAMSMK {
 CreateDisk(diskConstructor(parametros));
 inicializarArreglo(parametros); 
 }
@@ -149,11 +161,11 @@ PARAMMK: path igual e_path {strcpy($$, $3);}
 ;
 
 F_RMDISK: rmdisk path igual e_path{
-RemoveDisk($4);
-}
+RemoveDisk($4);}
 ;
 
-F_FDISK: fdisk PARAMSF{inicializarArreglo8(parametros8);}
+F_FDISK: fdisk PARAMSF{makePartition(separarParams(parametros8));
+inicializarArreglo8(parametros8);}
 ;
 
 PARAMSF: PARAMF PARAMSF {parametros8[getIndex8(parametros8)]=$1;}
@@ -166,8 +178,13 @@ PARAMF: size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_
         |type igual e_type {strcpy($$, $3);}
         |fit igual e_fit {strcpy($$, $3);}
         |delet igual e_delet {strcpy($$, $3);}
-        |name igual e_name {strcpy($$,'#'+ $3);}
-        |add igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, '%'+num_char);}
+        |name igual e_name {string name = $3;string nameComplete = '#'+name; strcpy($$,nameComplete.c_str());}
+        |add igual number {char num_char[MAX_DIGITS + sizeof(char)];
+        sprintf(num_char, "%d", $3);
+        string numchar2 = num_char;
+        string numchar3 = '%'+numchar2;
+        strcpy($$, numchar3.c_str());
+        }
 ;
 
 F_MOUNT: mount PARAMSMOUNT {Mount(getPathMount(parametros), getNameMount(parametros));
@@ -182,19 +199,35 @@ PARAMMOUNT: path igual e_path {strcpy($$, $3);}
         |name igual e_name {strcpy($$, $3);}
 ;
 
-F_UNMOUNT: unmount id igual e_id
+F_UNMOUNT: unmount id igual e_id {Unmount($4);}
 ;
 
-F_MKFS: mkfs PARAMSMKFS
+F_MKFS: mkfs PARAMSMKFS {mkfsMethod(separarParamsMKFS(parametros3));
+inicializarArreglo3(parametros3);}
 ;
 
-PARAMSMKFS: PARAMMKFS PARAMSMKFS
-        |PARAMMKFS
+PARAMSMKFS: PARAMMKFS PARAMSMKFS {parametros3[getIndex3(parametros3)]=$1;}
+        |PARAMMKFS {parametros3[getIndex3(parametros3)]=$1;}
 ;
 
-PARAMMKFS: id igual e_id
-        |type igual e_delet
-        |fs igual e_name
+PARAMMKFS: id igual e_id {strcpy($$, $3);}
+        |type igual e_delet {strcpy($$, $3);}
+        |fs igual password {strcpy($$, $3);}
+;
+
+F_REP: rep PARAMSREP {makeReports(parametros5);
+inicializarArreglo5(parametros5);}
+;
+
+PARAMSREP: PARAMREP PARAMSREP {parametros5[getIndex5(parametros5)]=$1;}
+            |PARAMREP {parametros5[getIndex5(parametros5)]=$1;}
+;
+
+PARAMREP: name igual e_name {strcpy($$, $3);}
+         |path igual e_path {strcpy($$, $3);}
+         |id igual e_id {strcpy($$, $3);}
+         |ruta igual e_path {strcpy($$, $3);}
+         |root {strcpy($$, $1);}
 ;
 
 F_LOGIN: login PARAMSLOGIN
@@ -340,6 +373,36 @@ int getIndex8(string params[8]){
 
 void inicializarArreglo8(string params[8]){
         for(int i = 0; i<8;i++){
+                params[i]="";
+        }
+}
+
+int getIndex3(string params[3]){
+        for(int i = 0; i<3; i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
+
+void inicializarArreglo3(string params[3]){
+        for(int i = 0; i<3;i++){
+                params[i]="";
+        }
+}
+
+int getIndex5(string params[5]){
+        for(int i = 0; i<5; i++){
+                if(params[i]==""){
+                        return i;
+                }
+        }
+        return 0;
+}
+
+void inicializarArreglo5(string params[5]){
+        for(int i = 0; i<5;i++){
                 params[i]="";
         }
 }

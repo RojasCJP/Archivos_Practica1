@@ -1,0 +1,126 @@
+digraph test {
+    graph [ratio=fill];
+    node [label="\N", fontsize=15, shape=plaintext];
+    graph [bb="0,0,352,154"];
+    arset [label=<
+        <TABLE ALIGN="LEFT"><TR>
+                <TD>Nombre</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Valor</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Tamano MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>307200</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Fecha creacion MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>Sun Sep  5 22:47:22 2021
+</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Disk Signature MBR</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>383</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Fit Disk</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>f</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR><TR>
+                <TD>Part 0 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 0 Type</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>p</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 0 Fit</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>f</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 0 Size</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>40960</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 0 Name</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>particion1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR><TR>
+                <TD>Part 1 Status</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>1</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 1 Type</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>p</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Part 1 Fit</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>f</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 1 Size</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>102400</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>
+             <TR>
+                <TD>Part 1 Name</TD>
+                <TD>
+                    <TABLE BORDER="0">
+                        <TR><TD>particion2</TD></TR>
+                    </TABLE>
+                </TD>
+            </TR>        </TABLE>
+    >, ];
+}

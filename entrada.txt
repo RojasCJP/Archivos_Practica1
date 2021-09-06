@@ -1,0 +1,14 @@
+rmdisk -path=/discoPrueba1.disk
+mkdisk -size=300 -path=/discoPrueba1.disk -u=K
+fdisk -size=30 -u=K -path=/discoPrueba1.disk -name=Particion1 -type=p
+fdisk -add=10 -u=K -path=/discoPrueba1.disk -name=Particion1
+fdisk -size=100 -u=K -path=/discoPrueba1.disk -name=Particion2
+mount -path=/discoPrueba1.disk -name=Particion1
+mkfs -id=891A -type=fast -fs=2fs
+rep -name=mbr -id=891A -path=/home/juanpa/Documents/mbr.png
+rep -name=disk -id=891A -path=/home/juanpa/Documents/disk.png
+rep -name=inode -id=891A -path=/home/juanpa/Documents/inodo.png
+rep -name=block -id=891A -path=/home/juanpa/Documents/block.png
+rep -name=bm_inode -id=891A -path=/home/juanpa/Documents/bminodo.txt
+rep -name=bm_block -id=891A -path=/home/juanpa/Documents/bmblock.txt
+rep -name=sb -id=891A -path=/home/juanpa/Documents/sb.png

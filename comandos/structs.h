@@ -12,6 +12,7 @@ struct INODO {
     int block[15];
     char type;
     int size;
+    int permisos;
 };
 
 struct BLOCK_FILE {
@@ -19,7 +20,7 @@ struct BLOCK_FILE {
 };
 
 struct BLOCK_POINTER{
-    int pinters[16];
+    int pointers[16];
 };
 
 struct CONTENT{

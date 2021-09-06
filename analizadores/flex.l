@@ -48,11 +48,14 @@ FIND        "find"
 CHOWN       "chown"
 CHGRP       "chgrp"
 PAUSE       "pause"
+REP         "rep"
 
 SIZE        "-size"
 FIT         "-f"
 UNITS       "-u"
 PATH        "-path"
+RUTA        "-ruta"
+ROOT        "-root"
 TYPE        "-type"
 DELET       "-delete"
 NAME        "-name"
@@ -88,15 +91,15 @@ FULL        "full"
 PATH1       {SLASH}{SEMIROUTE}*{NAME_FILE}
 PATH2       \"{SLASH}({IDENTIFICADOR}|{ENTERO}|{SLASH}|" ")+{NAME_FILE}\"
 PASSWORD    ({IDENTIFICADOR}|{ENTERO})+
-NAME1       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*
-NAME2       \"{IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO}|" ")*\"
-IDES        {ENTERO}[a-z]{1,2}
+NAME1       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO}|"_")*
+NAME2       \"{IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO}|"_"|" ")*\"
+IDES        {ENTERO}+[a-zA-Z]
 
 
 DISK_EXTENTION1 "dk"
 DISK_EXTENTION2 "disk"
 SCRIPT_EXTENTION "script" 
-NAME_FILE       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*"."({DISK_EXTENTION2}|{DISK_EXTENTION1}|{SCRIPT_EXTENTION})
+NAME_FILE       {IDENTIFICADOR}({IDENTIFICADOR}|{ENTERO})*"."({DISK_EXTENTION2}|{DISK_EXTENTION1}|{SCRIPT_EXTENTION}|{IDENTIFICADOR})
 DELIMITADOR     [\t\r\f" "]
 COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 
@@ -115,6 +118,7 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {MOUNT} {return(mount);}
 {UNMOUNT} {return(unmount);}
 {MKFS} {return(mkfs);}
+{REP} {return(rep);}
 {RM} {return(rm);}
 
 {LOGIN} {return(login);}
@@ -142,6 +146,8 @@ COMENTARIO      #([^#|^\n|^\r\n])*(#)?
 {FIT} {return(fit);}
 {UNITS} {return(units);}
 {PATH} {return(path);}
+{RUTA} {return(ruta);}
+{ROOT} {return(root);}
 {TYPE} {return(type);}
 {NAME} {return(name);}
 {DELET} {return(delet);}

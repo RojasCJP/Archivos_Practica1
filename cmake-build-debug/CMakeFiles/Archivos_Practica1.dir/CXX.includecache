@@ -6,6 +6,40 @@
 
 #IncludeRegexTransform: 
 
+/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp
+stdio.h
+-
+iostream
+-
+array
+-
+list
+-
+cstring
+-
+../comandos/reportes.h
+/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
+limits.h
+-
+stdint.h
+-
+stddef.h
+-
+stddef.h
+-
+libintl.h
+-
+alloca.h
+-
+malloc.h
+-
+stdlib.h
+-
+stdlib.h
+-
+stdio.h
+-
+
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/fdisk.h
 iostream
 -
@@ -37,6 +71,8 @@ fdisk.h
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/fdisk.h
 math.h
 -
+sstream
+-
 
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
 iostream
@@ -48,15 +84,5 @@ mkfs.h
 
 /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/structs.h
 iostream
--
-
-/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/main.cpp
-iostream
--
-comandos/reportes.h
-/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/reportes.h
-fstream
--
-vector
 -
 
