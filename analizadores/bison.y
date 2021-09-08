@@ -105,6 +105,7 @@ void inicializarArreglo5(string params[5]);
 %type <text> PARAMF
 %type <text> PARAMMKFS
 %type <text> PARAMREP
+%type <text> PARAMMKDIR
 
 %start START
 %union{
@@ -320,15 +321,18 @@ PARAMREN: path igual e_path
         |name igual e_name
 ;
 
-F_MKDIR: mkdir PARAMSMKDIR
+F_MKDIR: mkdir PARAMSMKDIR {
+inicializarArreglo3(parametros3);
+}
 ;
 
-PARAMSMKDIR: PARAMSMKDIR PARAMMKDIR
-        |PARAMMKDIR
+PARAMSMKDIR: PARAMSMKDIR PARAMMKDIR {parametros3[getIndex3(parametros3)]=$1;}
+        |PARAMMKDIR {parametros3[getIndex3(parametros3)]=$1;}
 ;
 
-PARAMMKDIR: path igual e_path
-        |pp
+PARAMMKDIR: path igual e_path {strcpy($$, $3)};
+        |id igual e_id {strcpy($$, $3)};
+        |pp {cout<<"no se pueden crear los demas directorios"<<endl;}
 ;
 
 F_CP: cp PARAMSCP

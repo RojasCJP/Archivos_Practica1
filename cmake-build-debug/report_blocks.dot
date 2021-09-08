@@ -8,8 +8,21 @@ b_0[ shape=plaintext label=<
 <tr><td bgcolor="#c0ffb7">b_inodo</td><td bgcolor="#c0ffb7">0</td></tr>
 <tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" port="ib208">users.txt</td></tr>
 <tr><td bgcolor="#ffb7c0">b_inodo</td><td bgcolor="#ffb7c0">2</td></tr>
-<tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" port="ib312">root</td></tr>
+<tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" port="ib312">prueba</td></tr>
 <tr><td bgcolor="#ffd2b7">b_inodo</td><td bgcolor="#ffd2b7">3</td></tr>
+</table>
+>];
+b_202[ shape=plaintext label=< 
+<table border='0' cellborder='1' cellspacing='0'>
+<tr><td port="21008" colspan="3">Bloque 202</td></tr>
+<tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >/</td></tr>
+<tr><td bgcolor="#e5b7ff">b_inodo</td><td bgcolor="#e5b7ff">0</td></tr>
+<tr><td bgcolor="#c0ffb7">b_name</td><td bgcolor="#c0ffb7" >/</td></tr>
+<tr><td bgcolor="#c0ffb7">b_inodo</td><td bgcolor="#c0ffb7">0</td></tr>
+<tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" port="ib520">home</td></tr>
+<tr><td bgcolor="#ffb7c0">b_inodo</td><td bgcolor="#ffb7c0">5</td></tr>
+<tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" ></td></tr>
+<tr><td bgcolor="#ffd2b7">b_inodo</td><td bgcolor="#ffd2b7">-1</td></tr>
 </table>
 >];
 b_1[ shape=plaintext label=< 
@@ -30,17 +43,19 @@ b_2[ shape=plaintext label=<
 <tr><td port="416">Bloque 2</td></tr>
 <tr><td>1,G,root
 1,U,root,root,123
+2,U,r<br/>oot,Juan,wenas
+2,G,alumnos
 </td></tr>
 </table>
 >];
-b_699[ shape=plaintext label=< 
+b_240[ shape=plaintext label=< 
 <table border='0' cellborder='1' cellspacing='0'>
-<tr><td port="73008" colspan="3">Bloque 699</td></tr>
-<tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >root</td></tr>
+<tr><td port="25272" colspan="3">Bloque 240</td></tr>
+<tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >prueba</td></tr>
 <tr><td bgcolor="#e5b7ff">b_inodo</td><td bgcolor="#e5b7ff">3</td></tr>
 <tr><td bgcolor="#c0ffb7">b_name</td><td bgcolor="#c0ffb7" port="ib0">/</td></tr>
 <tr><td bgcolor="#c0ffb7">b_inodo</td><td bgcolor="#c0ffb7">0</td></tr>
-<tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" port="ib416">prueba.txt</td></tr>
+<tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" port="ib416">file.txt</td></tr>
 <tr><td bgcolor="#ffb7c0">b_inodo</td><td bgcolor="#ffb7c0">4</td></tr>
 <tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" ></td></tr>
 <tr><td bgcolor="#ffd2b7">b_inodo</td><td bgcolor="#ffd2b7">-1</td></tr>
@@ -49,8 +64,33 @@ b_699[ shape=plaintext label=<
 b_3[ shape=plaintext label=< 
 <table border='0' cellborder='1' cellspacing='0'>
 <tr><td port="728">Bloque 3</td></tr>
-<tr><td>buenas tardes
-</td></tr>
+<tr><td>112345678901234hola</td></tr>
+</table>
+>];
+b_4[ shape=plaintext label=< 
+<table border='0' cellborder='1' cellspacing='0'>
+<tr><td port="936" colspan="3">Bloque 4</td></tr>
+<tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >home</td></tr>
+<tr><td bgcolor="#e5b7ff">b_inodo</td><td bgcolor="#e5b7ff">5</td></tr>
+<tr><td bgcolor="#c0ffb7">b_name</td><td bgcolor="#c0ffb7" port="ib0">/</td></tr>
+<tr><td bgcolor="#c0ffb7">b_inodo</td><td bgcolor="#c0ffb7">0</td></tr>
+<tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" port="ib624">emely</td></tr>
+<tr><td bgcolor="#ffb7c0">b_inodo</td><td bgcolor="#ffb7c0">6</td></tr>
+<tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" ></td></tr>
+<tr><td bgcolor="#ffd2b7">b_inodo</td><td bgcolor="#ffd2b7">-1</td></tr>
+</table>
+>];
+b_5[ shape=plaintext label=< 
+<table border='0' cellborder='1' cellspacing='0'>
+<tr><td port="1144" colspan="3">Bloque 5</td></tr>
+<tr><td bgcolor="#e5b7ff">b_name</td><td bgcolor="#e5b7ff" >emely</td></tr>
+<tr><td bgcolor="#e5b7ff">b_inodo</td><td bgcolor="#e5b7ff">6</td></tr>
+<tr><td bgcolor="#c0ffb7">b_name</td><td bgcolor="#c0ffb7" port="ib520">home</td></tr>
+<tr><td bgcolor="#c0ffb7">b_inodo</td><td bgcolor="#c0ffb7">5</td></tr>
+<tr><td bgcolor="#ffb7c0">b_name</td><td bgcolor="#ffb7c0" ></td></tr>
+<tr><td bgcolor="#ffb7c0">b_inodo</td><td bgcolor="#ffb7c0">-1</td></tr>
+<tr><td bgcolor="#ffd2b7">b_name</td><td bgcolor="#ffd2b7" ></td></tr>
+<tr><td bgcolor="#ffd2b7">b_inodo</td><td bgcolor="#ffd2b7">-1</td></tr>
 </table>
 >];
 }

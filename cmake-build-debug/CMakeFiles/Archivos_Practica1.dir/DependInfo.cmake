@@ -8,8 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp" "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o"
-  "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.cpp" "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o"
   "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/main.cpp" "/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles/Archivos_Practica1.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

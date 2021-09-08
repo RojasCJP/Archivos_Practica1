@@ -15,19 +15,6 @@ void graphBlockFile(BLOCK_FILE *block, int initBlock, FILE *myFile, int indexIno
 void graphBlockDirectory(BLOCK_DIR *block, int initBlock, FILE *myFile, int indexInodo, SuperBlock *sb, char path[],
                          bool graphConnection);
 
-BLOCK_FILE *readBlockFile(char path[], int init) {
-    FILE *myFile = fopen(path, "rb+");
-    if (myFile == NULL) {
-        cout << "Error al abrir el disco \n";
-        return NULL;
-    }
-    BLOCK_FILE *bd = (BLOCK_FILE *) malloc(sizeof(BLOCK_FILE));
-    fseek(myFile, init, SEEK_SET);
-    fread(bd, sizeof(BLOCK_FILE), 1, myFile);
-    fclose(myFile);
-    return bd;
-}
-
 void graphInodo(INODO *inodo, int indexInodo, FILE *myFile, char path[], SuperBlock *sb) {
     if (inodo == NULL) return;
     fputs("i_", myFile);
@@ -427,13 +414,16 @@ void reporteDisk(string spath, string id) {
         return;
     }
     fseek(fileReport, 0, SEEK_SET);
+    char reporteCompletoChar[10000];
+    strcpy(reporteCompletoChar,reporteCompleto.c_str());
+//    cout<<reporteCompleto<<endl;
+//    cout << reporteCompletoChar<<endl;
     fputs(reporteCompleto.c_str(), fileReport);
     fclose(fileReport);
 //    string pathString(path_rep);
     string command = "dot -Tpng report_disk.dot -o \"" + pathOutput + "\"";//+"/report_mbr.png";
     system(command.c_str());
 
-    cout << reporteCompleto << endl;
 }
 
 void reporteMBR(string spath, string id) {
@@ -578,7 +568,6 @@ void reporteMBR(string spath, string id) {
     string command = "dot -Tpng report_mbr.dot -o \"" + pathOutput + "\"";//+"/report_mbr.png";
     system(command.c_str());
 
-    cout << reporteCompleto << endl;
 }
 
 bool reportBitmap(int rep, string id, char path_rep[]) {
@@ -813,7 +802,6 @@ bool reportSuperBlock(string id, char path_rep[]) {
     string pathString(path_rep);
     string command = "dot -Tpng report_sb.dot -o \"" + pathString + "\"";//+"/report_mbr.png";
     system(command.c_str());
-    cout << reporteBody << endl;
     return true;
 }
 

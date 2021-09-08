@@ -82,18 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp">
-			<Option target="Archivos_Practica1"/>
-		</Unit>
-		<Unit filename="/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.h">
-			<Option target="Archivos_Practica1"/>
-		</Unit>
-		<Unit filename="/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.cpp">
-			<Option target="Archivos_Practica1"/>
-		</Unit>
-		<Unit filename="/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.h">
-			<Option target="Archivos_Practica1"/>
-		</Unit>
 		<Unit filename="/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/comandos/mkfs.h">
 			<Option target="Archivos_Practica1"/>
 		</Unit>

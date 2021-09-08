@@ -3,6 +3,22 @@
 using namespace std;
 string rpath = "/home/juanpa/Documents";
 
+
+class User {
+public:
+    std::string id;
+    char type;
+    std::string name;
+    std::string pwd;
+    std::string group;
+};
+
+class Group {
+public:
+    std::string id;
+    std::string name;
+};
+
 class Sesion {
 public:
     char *user;
@@ -32,7 +48,7 @@ public:
     }
 };
 
-extern Sesion *active_sesion;
+extern Sesion *active_sesion = new Sesion();
 enum Operation {
     MKDIRECTORY, MKFILE_PATH, MKFILE_SIZE, EMPTY, ADDUSER, ADDGRP, DELUSER, DELGRP,
     EDIT_FILE
@@ -139,7 +155,7 @@ struct Partition {
     char fit;
     int start;
     int size;
-    char name[16];
+    char name[16] = "";
 };
 
 struct MBR {

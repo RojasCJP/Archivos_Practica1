@@ -129,54 +129,6 @@ Archivos_Practica1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/build
 .PHONY : Archivos_Practica1/fast
 
-analizadores/parser.o: analizadores/parser.cpp.o
-.PHONY : analizadores/parser.o
-
-# target to build an object file
-analizadores/parser.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o
-.PHONY : analizadores/parser.cpp.o
-
-analizadores/parser.i: analizadores/parser.cpp.i
-.PHONY : analizadores/parser.i
-
-# target to preprocess a source file
-analizadores/parser.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.i
-.PHONY : analizadores/parser.cpp.i
-
-analizadores/parser.s: analizadores/parser.cpp.s
-.PHONY : analizadores/parser.s
-
-# target to generate assembly for a file
-analizadores/parser.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.s
-.PHONY : analizadores/parser.cpp.s
-
-analizadores/scanner.o: analizadores/scanner.cpp.o
-.PHONY : analizadores/scanner.o
-
-# target to build an object file
-analizadores/scanner.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o
-.PHONY : analizadores/scanner.cpp.o
-
-analizadores/scanner.i: analizadores/scanner.cpp.i
-.PHONY : analizadores/scanner.i
-
-# target to preprocess a source file
-analizadores/scanner.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.i
-.PHONY : analizadores/scanner.cpp.i
-
-analizadores/scanner.s: analizadores/scanner.cpp.s
-.PHONY : analizadores/scanner.s
-
-# target to generate assembly for a file
-analizadores/scanner.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Archivos_Practica1.dir/build.make CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.s
-.PHONY : analizadores/scanner.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -210,12 +162,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Archivos_Practica1"
-	@echo "... analizadores/parser.o"
-	@echo "... analizadores/parser.i"
-	@echo "... analizadores/parser.s"
-	@echo "... analizadores/scanner.o"
-	@echo "... analizadores/scanner.i"
-	@echo "... analizadores/scanner.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
