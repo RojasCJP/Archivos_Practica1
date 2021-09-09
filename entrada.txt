@@ -4,7 +4,8 @@ fdisk -size=30 -u=K -path=/discoPrueba1.disk -name=Particion1 -type=p
 fdisk -add=10 -u=K -path=/discoPrueba1.disk -name=Particion1
 fdisk -size=100 -u=K -path=/discoPrueba1.disk -name=Particion2
 mount -path=/discoPrueba1.disk -name=Particion1
-mkfs -id=891A -type=fast -fs=2fs
+mkfs -id=891A -type=full -fs=2fs
+login -usr=root -pwd=123 -id=891A
 rep -name=mbr -id=891A -path=/home/juanpa/Documents/mbr.png
 rep -name=disk -id=891A -path=/home/juanpa/Documents/disk.png
 rep -name=inode -id=891A -path=/home/juanpa/Documents/inodo.png

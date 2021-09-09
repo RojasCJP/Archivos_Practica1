@@ -13,6 +13,8 @@ struct ParamsMKFS {
     int fs;
 };
 
+void loginn(char user[], char pass[], char id[]);
+
 ParamsMKFS separarParamsMKFS(string params[3]) {
     ParamsMKFS paramsFinal;
     string datos[3];
@@ -887,8 +889,8 @@ void addJournal(SuperBlock *sb, int startSb, char path[], Journal *newj) {
 bool createFile(char newPath[], bool createPath, char pathFile[], bool isRecovery) {
 
     char *ide = active_sesion->id;
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     string pathDisk = getPathDisk(id);
     string partition = getNamePartition(id);
@@ -937,10 +939,37 @@ bool createFile(char newPath[], bool createPath, char pathFile[], bool isRecover
     return res;
 }
 
+struct ParamsCreateFile{
+    char *path;
+    bool r = false;
+    int size;
+    char *contenido;
+};
+
+ParamsCreateFile CreateFilesSeparar(string params[4]){
+    ParamsCreateFile paramsReturn;
+    for (int i = 0; i < 4; ++i) {
+        if(params[i][0] == '0' || params[i][0] == '1' || params[i][0] == '2' || params[i][0] == '3' ||
+           params[i][0] == '4' || params[i][0] == '5' || params[i][0] == '6' || params[i][0] == '7' ||
+           params[i][0] == '8' || params[i][0] == '9'){
+            paramsReturn.size = stoi(params[i]);
+        }else if (params[i][0] == '#'){
+            cin>>paramsReturn.contenido;
+        }else if (params[i][0] == '/'){
+            strcpy(paramsReturn.path , params[i].c_str());
+        }else if (params[i] == "re"){
+            paramsReturn.r = true;
+        }
+
+    }
+    return paramsReturn;
+}
+
+
 bool createFile(char newPath[], bool createPath, int size, bool isRecovery) {
     char *ide = active_sesion->id;
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     string pathDisk = getPathDisk(id);
     string partition = getNamePartition(id);
@@ -1339,10 +1368,10 @@ string findContentFile(char filePath[], char path[], char partition[], char **ti
 
 bool catFile(char filePath[], char path[], char partition[]) {
     char *title;
-    char pathRes[10000] ;
-    char nameRes[10000] ;
-    strcpy(pathRes,path);
-    strcpy(nameRes,partition);
+    char pathRes[10000];
+    char nameRes[10000];
+    strcpy(pathRes, path);
+    strcpy(nameRes, partition);
     string res = findContentFile(filePath, pathRes, nameRes, &title);
     //cout<<"--->"<<title<<"<---\n";
     cout << res << endl;
@@ -1566,7 +1595,49 @@ bool ReplaceContentFile(int indexInode, char *content, char path[], char namePar
     return true;
 }
 
-bool addUser(string id, char usr[], char pwd[], char grp[], bool isRecovery) {
+struct UsrParams {
+    char *user;
+    char *pass;
+    char *group;
+};
+
+UsrParams separarUsrParams(string datos[3]){
+    UsrParams parametrosRetorno;
+    string params[3];
+    string retorno[3];
+//    char auxi[100] ="";
+//    char auxi1[100]="";
+//    char auxi2[100]="";
+    for (int i = 0; i < 3; ++i) {
+        params[i] = datos[i];
+        if (params[i][0] == '%') {
+            retorno[0]=params[i];
+//            strcpy(parametrosRetorno.group, params[i].c_str());
+        } else if (params[i][0] == '#') {
+            retorno[1]=params[i];
+//            string param = params[i].substr(1, params[i].length() - 1);
+//            strcpy(parametrosRetorno.user, param.c_str());
+        } else {
+            retorno[2]=params[i];
+//            strcpy(parametrosRetorno.pass, params[i].c_str());
+        }
+    }
+//    string param1 = retorno[0].substr(1, retorno[0].length() - 1);
+//    strcpy(auxi,param1.c_str());
+//    parametrosRetorno.group =auxi;
+//    string parami = retorno[1].substr(1, retorno[1].length() - 1);
+//    strcpy(auxi1,parami.c_str());
+//    parametrosRetorno.user =auxi1;
+//    string parami2 = retorno[2].substr(0, retorno[2].length());
+//    strcpy(auxi2,parami2.c_str());
+//    parametrosRetorno.pass =auxi2;
+    return parametrosRetorno;
+}
+
+bool addUser(char ide[], char usr[], char pwd[], char grp[], bool isRecovery) {
+    char id[10000];
+    strcpy(id, ide);
+
     string pathDisk = getPathDisk(id);
     string namePartition = getNamePartition(id);
 
@@ -1628,14 +1699,15 @@ bool addUser(string id, char usr[], char pwd[], char grp[], bool isRecovery) {
         addJournal(sb, startSb, path, newj);
     }
     delete sb;
+    cout<<"creacion de usuario exitosa"<<endl;
     return r;
 }
 
 bool addGroup(char ide[], char grp[], bool isRecovery) {
     char *title;
     char *filePath = "/users.txt";
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     string pathDisk = getPathDisk(id);
     string namePartition = getNamePartition(id);
@@ -1691,8 +1763,10 @@ bool addGroup(char ide[], char grp[], bool isRecovery) {
 User *getUser(char usr[], char path[], char namePartition[]) {
     char *title;
     char *filePath = "/users.txt";
+    char user[10000];
+    strcpy(user, usr);
     string res = findContentFile(filePath, path, namePartition, &title);
-    return getUser(usr, &res[0]);
+    return getUser(user, &res[0]);
 }
 
 User *getUserById(char id[], char path[], char namePartition[]) {
@@ -1807,8 +1881,8 @@ void clearInodePointers(INODO *inodo) {
 bool editFile(char pathFile[], char newCont[], bool isRecovery) {
 
     char *ide = active_sesion->id;
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     string pathDisk = getPathDisk(id);
     string partition = getNamePartition(id);
@@ -1854,8 +1928,8 @@ bool editFile(char pathFile[], char newCont[], bool isRecovery) {
 }
 
 bool deleteUser(char ide[], char name[], bool isRecovery) {
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     char *title;
     char *filePath = "/users.txt";
@@ -1958,8 +2032,8 @@ bool deleteGroup(char ide[], char name[], bool isRecovery) {
     char *title;
     char *filePath = "/users.txt";
 
-    char id[10000] ;
-    strcpy(id,ide);
+    char id[10000];
+    strcpy(id, ide);
 
     string pathDisk = getPathDisk(id);
     string namePartition = getNamePartition(id);
@@ -2135,7 +2209,7 @@ bool recoverySystem(SuperBlock *sb, int startSb, char path[], char namePartition
                 createDirectory(journal->j_boolean, id, journal->j_path, true);
                 break;
             case MKFILE_PATH:
-                createFile(journal->j_path, journal->j_boolean, journal->j_content,  true);
+                createFile(journal->j_path, journal->j_boolean, journal->j_content, true);
                 break;
             case MKFILE_SIZE:
                 createFile(journal->j_path, journal->j_boolean, journal->j_size, true);
@@ -2163,6 +2237,7 @@ bool recoverySystem(SuperBlock *sb, int startSb, char path[], char namePartition
     }
 
     fclose(myFile);
+    return true;
 }
 
 bool isSessionActive() {
@@ -2185,7 +2260,43 @@ bool isSessionActive() {
     return false;
 }
 
-void login(char user[], char pass[], char id[]) {
+struct LoginParams {
+    char *user;
+    char *pass;
+    char *id;
+};
+
+LoginParams separarParamsLogin(string datos[3]) {
+    LoginParams paramsReturn;
+    string params[3];
+    string retorno[3];
+    for (int i = 0; i < 3; ++i) {
+        params[i] = datos[i];
+        if (params[i][0] == '8' && params[i][1] == '9') {
+            retorno[0] = params[i];
+//            strcpy(paramsReturn.id, params[i].c_str());
+        } else if (params[i][0] == '#') {
+            retorno[1] = params[i];
+//            string param = params[i].substr(1, params[i].length() - 1);
+//            strcpy(paramsReturn.id, param.c_str());
+        } else {
+            retorno[2] = params[i];
+        }
+    }
+    char aux[1000];
+    strcpy(aux,retorno[0].c_str());
+    paramsReturn.id =aux;
+    char aux1[1000];
+    string param = retorno[1].substr(1, retorno[1].length() - 1);
+    strcpy(aux1,param.c_str());
+    paramsReturn.user =aux1;
+    char aux2[1000];
+    strcpy(aux2,retorno[2].c_str());
+    paramsReturn.pass =aux2;
+    return paramsReturn;
+}
+
+void loginn(char user[], char pass[], char id[]) {
     active_sesion->user = user;
     active_sesion->id = id;
     string activePathString = getPathDisk(id);
@@ -2199,6 +2310,7 @@ void login(char user[], char pass[], char id[]) {
     User *usr = getUser(user, active_sesion->path, active_sesion->namePartition);
     active_sesion->idUser = &usr->id[0];
     active_sesion->idGrp = &usr->group[0];
+    cout<<"inicio de sesion correcto"<<endl;
 }
 
 #ifndef PROYECTO1_MKFS_H

@@ -79,17 +79,47 @@ CMakeFiles/Archivos_Practica1.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Archivos_Practica1.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/main.cpp -o CMakeFiles/Archivos_Practica1.dir/main.cpp.s
 
+CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o: CMakeFiles/Archivos_Practica1.dir/flags.make
+CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o: ../analizadores/parser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o -c /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp
+
+CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp > CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.i
+
+CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/parser.cpp -o CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.s
+
+CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o: CMakeFiles/Archivos_Practica1.dir/flags.make
+CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o: ../analizadores/scanner.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o -c /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.cpp
+
+CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.cpp > CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.i
+
+CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/analizadores/scanner.cpp -o CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.s
+
 # Object files for target Archivos_Practica1
 Archivos_Practica1_OBJECTS = \
-"CMakeFiles/Archivos_Practica1.dir/main.cpp.o"
+"CMakeFiles/Archivos_Practica1.dir/main.cpp.o" \
+"CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o" \
+"CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o"
 
 # External object files for target Archivos_Practica1
 Archivos_Practica1_EXTERNAL_OBJECTS =
 
 Archivos_Practica1: CMakeFiles/Archivos_Practica1.dir/main.cpp.o
+Archivos_Practica1: CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o
+Archivos_Practica1: CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o
 Archivos_Practica1: CMakeFiles/Archivos_Practica1.dir/build.make
 Archivos_Practica1: CMakeFiles/Archivos_Practica1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Archivos_Practica1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/juanpa/Documents/Archivos/Laboratorio/Archivos_Practica1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Archivos_Practica1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Archivos_Practica1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

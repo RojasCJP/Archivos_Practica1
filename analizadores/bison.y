@@ -105,7 +105,9 @@ void inicializarArreglo5(string params[5]);
 %type <text> PARAMF
 %type <text> PARAMMKFS
 %type <text> PARAMREP
-%type <text> PARAMMKDIR
+%type <text> PARAMLOGIN
+%type <text> PARAMMKUSR
+%type <text> PARAMTOUCH
 
 %start START
 %union{
@@ -180,12 +182,7 @@ PARAMF: size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_
         |fit igual e_fit {strcpy($$, $3);}
         |delet igual e_delet {strcpy($$, $3);}
         |name igual e_name {string name = $3;string nameComplete = '#'+name; strcpy($$,nameComplete.c_str());}
-        |add igual number {char num_char[MAX_DIGITS + sizeof(char)];
-        sprintf(num_char, "%d", $3);
-        string numchar2 = num_char;
-        string numchar3 = '%'+numchar2;
-        strcpy($$, numchar3.c_str());
-        }
+        |add igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3); string numchar2 = num_char; string numchar3 = '%'+numchar2; strcpy($$, numchar3.c_str()); }
 ;
 
 F_MOUNT: mount PARAMSMOUNT {Mount(getPathMount(parametros), getNameMount(parametros));
@@ -231,37 +228,47 @@ PARAMREP: name igual e_name {strcpy($$, $3);}
          |root {strcpy($$, $1);}
 ;
 
-F_LOGIN: login PARAMSLOGIN
+F_LOGIN: login PARAMSLOGIN {loginn(separarParamsLogin(parametros3).user,separarParamsLogin(parametros3).pass,separarParamsLogin(parametros3).id);
+inicializarArreglo3(parametros3);}
 ;
 
-PARAMSLOGIN: PARAMLOGIN PARAMSLOGIN
-        |PARAMLOGIN
+PARAMSLOGIN: PARAMLOGIN PARAMSLOGIN {parametros3[getIndex3(parametros3)]=$1;}
+        |PARAMLOGIN {parametros3[getIndex3(parametros3)]=$1;}
 ;
 
-PARAMLOGIN: usr igual e_name
-        |pass igual password
-        |id igual e_id
+PARAMLOGIN: usr igual e_name {string name = $3;string nameComplete = '#'+name; strcpy($$,nameComplete.c_str());}
+        |pass igual password {strcpy($$, $3);}
+        |pass igual e_name {strcpy($$, $3);}
+        |pass igual e_id {strcpy($$, $3);}
+        |pass igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, num_char);}
+        |id igual e_id {strcpy($$, $3);}
 ;
 
 F_LOGOUT: logout
 ;
 
-F_MKGRP: mkgrp name igual e_name
+F_MKGRP: mkgrp name igual e_name {addGroup(active_sesion->id,$4,false);}
 ;
 
 F_RMGRP: rmgrp name igual e_name
 ;
 
-F_MKUSR: mkusr PARAMSMKUSR
+F_MKUSR: mkusr PARAMSMKUSR {
+UsrParams usuario = separarUsrParams(parametros3);
+addUser(active_sesion->id,usuario.user,usuario.pass,usuario.group,false);
+inicializarArreglo3(parametros3);}
 ;
 
-PARAMSMKUSR: PARAMMKUSR PARAMSMKUSR
-        |PARAMMKUSR
+PARAMSMKUSR: PARAMMKUSR PARAMSMKUSR {parametros3[getIndex3(parametros3)]=$1;}
+        |PARAMMKUSR {parametros3[getIndex3(parametros3)]=$1;}
 ;
 
-PARAMMKUSR: usr igual e_name
-        |pass igual password
-        |grp igual e_name
+PARAMMKUSR: usr igual e_name {string name = $3;string nameComplete = '#'+name; strcpy($$,nameComplete.c_str());}
+        |pass igual e_name {string name = $3;string nameComplete = '%'+name; strcpy($$,nameComplete.c_str());}
+        |pass igual e_id {string name = $3;string nameComplete = '%'+name; strcpy($$,nameComplete.c_str());}
+        |pass igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3); string numchar2 = num_char; string numchar3 = '%'+numchar2; strcpy($$, numchar3.c_str()); }
+        |pass igual password {string name = $3;string nameComplete = '%'+name; strcpy($$,nameComplete.c_str());}
+        |grp igual e_name {strcpy($$, $3);}
 ;
 
 F_RMUSR: rmusr usr igual e_name
@@ -279,20 +286,23 @@ PARAMCHMOD: path igual e_path
         |ugo igual number
 ;
 
-F_TOUCH: touch PARAMSTOUCH;
+F_TOUCH: touch PARAMSTOUCH {
+    ParamsCreateFile uses = CreateFilesSeparar(parametros);
+    createFile(uses.path,uses.r,uses.size,false);
+    editFile(uses.path,uses.contenido,false);
+};
 
-PARAMSTOUCH: PARAMSTOUCH PARAMTOUCH
-        |PARAMTOUCH
+PARAMSTOUCH: PARAMTOUCH PARAMSTOUCH {parametros[getIndex(parametros)]=$1;}
+        |PARAMTOUCH {parametros[getIndex(parametros)]=$1;}
 ;
 
-PARAMTOUCH: path igual e_path
-        |recursive
-        |size igual number
-        |cont igual e_path
-        |stdinn
+PARAMTOUCH: path igual e_path {strcpy($$, $3);}
+        |recursive { strcpy($$ , "re");}
+        |size igual number {char num_char[MAX_DIGITS + sizeof(char)];sprintf(num_char, "%d", $3);strcpy($$, num_char);}
+        |stdinn { strcpy($$ ,"#a");}
 ;
 
-F_CAT: cat filen igual e_path
+F_CAT: cat filen igual e_path {catFile($4, active_sesion->path,active_sesion->namePartition);}
 ;
 
 F_RM: rm path igual e_path
@@ -321,18 +331,8 @@ PARAMREN: path igual e_path
         |name igual e_name
 ;
 
-F_MKDIR: mkdir PARAMSMKDIR {
-inicializarArreglo3(parametros3);
-}
-;
-
-PARAMSMKDIR: PARAMSMKDIR PARAMMKDIR {parametros3[getIndex3(parametros3)]=$1;}
-        |PARAMMKDIR {parametros3[getIndex3(parametros3)]=$1;}
-;
-
-PARAMMKDIR: path igual e_path {strcpy($$, $3)};
-        |id igual e_id {strcpy($$, $3)};
-        |pp {cout<<"no se pueden crear los demas directorios"<<endl;}
+F_MKDIR: mkdir path igual e_path pp {createDirectory(true,active_sesion->id,$4,false);}
+        | mkdir pp path igual e_path {createDirectory(true,active_sesion->id,$5,false);}
 ;
 
 F_CP: cp PARAMSCP
