@@ -1596,13 +1596,13 @@ bool ReplaceContentFile(int indexInode, char *content, char path[], char namePar
 }
 
 struct UsrParams {
-    char *user;
-    char *pass;
-    char *group;
+    char user[64];
+    char pass[64];
+    char group[64];
 };
 
 UsrParams separarUsrParams(string datos[3]){
-    Sesion sessionRespaldo;
+//    Sesion sessionRespaldo;
 //    sessionRespaldo.id = active_sesion->id;
 //    sessionRespaldo.namePartition= active_sesion->namePartition;
 //    sessionRespaldo.path = active_sesion->path;
@@ -1619,25 +1619,26 @@ UsrParams separarUsrParams(string datos[3]){
         params[i] = datos[i];
         if (params[i][0] == '%') {
             retorno[0]=params[i];
-//            strcpy(parametrosRetorno.group, params[i].c_str());
+            string param = params[i].substr(1, params[i].length() - 1);
+            strcpy(parametrosRetorno.pass, param.c_str());
         } else if (params[i][0] == '#') {
             retorno[1]=params[i];
-//            string param = params[i].substr(1, params[i].length() - 1);
-//            strcpy(parametrosRetorno.user, param.c_str());
+            string param = params[i].substr(1, params[i].length() - 1);
+            strcpy(parametrosRetorno.user, param.c_str());
         } else {
             retorno[2]=params[i];
-//            strcpy(parametrosRetorno.pass, params[i].c_str());
+            strcpy(parametrosRetorno.group, params[i].c_str());
         }
     }
-    string param1 = retorno[0].substr(1, retorno[0].length() - 1);
-    strcpy(auxi,param1.c_str());
-    parametrosRetorno.group =auxi;
-    string parami = retorno[1].substr(1, retorno[1].length() - 1);
-    strcpy(auxi1,parami.c_str());
-    parametrosRetorno.user =auxi1;
-    string parami2 = retorno[2].substr(0, retorno[2].length());
-    strcpy(auxi2,parami2.c_str());
-    parametrosRetorno.pass =auxi2;
+//    string param1 = retorno[0].substr(1, retorno[0].length() - 1);
+//    strcpy(auxi,param1.c_str());
+//    parametrosRetorno.group =auxi;
+//    string parami = retorno[1].substr(1, retorno[1].length() - 1);
+//    strcpy(auxi1,parami.c_str());
+//    parametrosRetorno.user =auxi1;
+//    string parami2 = retorno[2].substr(0, retorno[2].length());
+//    strcpy(auxi2,parami2.c_str());
+//    parametrosRetorno.pass =auxi2;
 //    active_sesion->id = sessionRespaldo.id;
 //    active_sesion->namePartition= sessionRespaldo.namePartition;
 //    active_sesion->path = sessionRespaldo.path;

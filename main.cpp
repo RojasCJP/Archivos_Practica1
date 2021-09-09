@@ -72,7 +72,7 @@ int main() {
 //    string entrada4[8] = {"", "k", "/discoPrueba1.disk", "", "", "", "#partition1", "%10"};
 //    string entradaMKFS1[3] = {"3fs", "fast", "891A"};
 //    string entradaMKFS2[3] = {"2fs", "fast", "892A"};
-
+//
 //    RemoveDisk("/discoPrueba1.disk");
 //    CreateDisk(diskConstructor(entrada));
 //    makePartition(separarParams(entrada1));
@@ -86,14 +86,13 @@ int main() {
 //    mkfsMethod(separarParamsMKFS(entradaMKFS1));
 //    mkfsMethod(separarParamsMKFS(entradaMKFS2));
 //    loginn("root","123","891A");
-//    addUser(active_sesion->id,"Juan","wenas","root",false);
+//    addUser(active_sesion->id,"juan","asdf","root",false);
 //    addGroup(active_sesion->id,"alumnos",false);
 //    catFile("/users.txt", active_sesion->path,active_sesion->namePartition);
 //    createFile("/prueba/file.txt",true,15,false);
 //    editFile("/prueba/file.txt","hola",false);
 //    createDirectory(true,active_sesion->id,"/home/junapa",false);
-    //catFile("/file.txt","/home/emely/Escritorio/testData/disk1.disk","particion_1");
-
+//
 //    reportTree("/home/juanpa/Documents/tree.png","891A");
 //    reporteDisk("/home/juanpa/Documents/disk.png", "891A");
 //    reportBitmap(1, "891A","/home/juanpa/Documents/particion1.txt");

@@ -9,6 +9,8 @@ login -usr=root -pwd=123 -id=891A
 mkusr -usr=juan -pwd=wenas -grp=root
 mkgrp -name=alumnos
 cat -filen=/users.txt
+touch -path=/prueba/file.txt -r -size=15 -stdin
+mkdir -path=/home/junpa -p
 rep -name=mbr -id=891A -path=/home/juanpa/Documents/mbr.png
 rep -name=disk -id=891A -path=/home/juanpa/Documents/disk.png
 rep -name=inode -id=891A -path=/home/juanpa/Documents/inodo.png
