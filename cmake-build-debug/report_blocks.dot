@@ -30,6 +30,7 @@ b_2[ shape=plaintext label=<
 <tr><td port="416">Bloque 2</td></tr>
 <tr><td>1,G,root
 1,U,root,root,123
+2,G,a<br/>lumnos
 </td></tr>
 </table>
 >];

@@ -37,7 +37,31 @@ int leerArchivo(string nombreArchivo) {
     return EXIT_SUCCESS;
 }
 
+char* substr(char* arr, int begin, int len)
+{
+    char* res = new char[len + 1];
+    for (int i = 0; i < len; i++)
+        res[i] = *(arr + begin + i);
+    res[len] = 0;
+    return res;
+}
+
 int main() {
+//    char entrada[150];
+//    while (entrada != "exit"){
+//        cout<<"ingrese el comando que desea ejecutar"<<endl;
+//        cin.getline(entrada,250);
+//        string entradaAnalizar;
+//        if(entrada[0]== 'e' && entrada[1] =='x'&& entrada[2] =='e' && entrada[3] == 'c'){
+//            entradaAnalizar = substr(entrada,5,100);
+//            cout<<entradaAnalizar<<endl;
+//            leerArchivo(entradaAnalizar);
+//            break;
+//        }else{
+//            cout<<entrada<<endl;
+//            leerEntrada(entrada);
+//        }
+//    }
     leerArchivo("/entrada.txt");
 //    leerEntrada("fdisk –size=30 -u=k –path=/discoPrueba1.disk –name=Particion1");
 //    string entrada[4] = {"100", "k", "/discoPrueba1.disk", "ff"};

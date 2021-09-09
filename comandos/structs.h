@@ -21,31 +21,23 @@ public:
 
 class Sesion {
 public:
-    char *user;
-    char *path;
-    char *namePartition;
-    char *id;
-    char *idUser;
-    char *idGrp;
+    char user[64];
+    char path[64];
+    char namePartition[64];
+    char id[64];
+    char idUser[64];
+    char idGrp[64];
 
     Sesion() {
-        this->user = NULL;
-        this->path = NULL;
-        this->namePartition = NULL;
-        this->id = NULL;
-        this->idGrp = NULL;
-        this->idUser = NULL;
+        this->user ;
+        this->path ;
+        this->namePartition ;
+        this->id;
+        this->idGrp ;
+        this->idUser ;
     }
 
-    void clear() {
-        user = NULL;
-        path = NULL;
-        namePartition = NULL;
-        id = NULL;
 
-        this->idGrp = NULL;
-        this->idUser = NULL;
-    }
 };
 
 extern Sesion *active_sesion = new Sesion();

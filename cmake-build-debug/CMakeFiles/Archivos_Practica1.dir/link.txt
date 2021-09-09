@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/Archivos_Practica1.dir/main.cpp.o CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o -o Archivos_Practica1 
+/usr/bin/c++ -g CMakeFiles/Archivos_Practica1.dir/main.cpp.o CMakeFiles/Archivos_Practica1.dir/analizadores/scanner.cpp.o CMakeFiles/Archivos_Practica1.dir/analizadores/parser.cpp.o -o Archivos_Practica1 

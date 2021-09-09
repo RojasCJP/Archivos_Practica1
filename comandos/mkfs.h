@@ -1602,12 +1602,19 @@ struct UsrParams {
 };
 
 UsrParams separarUsrParams(string datos[3]){
+    Sesion sessionRespaldo;
+//    sessionRespaldo.id = active_sesion->id;
+//    sessionRespaldo.namePartition= active_sesion->namePartition;
+//    sessionRespaldo.path = active_sesion->path;
+//    sessionRespaldo.user=active_sesion->user;
+//    sessionRespaldo.idGrp=active_sesion->idGrp;
+//    sessionRespaldo.idUser=active_sesion->idUser;
     UsrParams parametrosRetorno;
     string params[3];
     string retorno[3];
-//    char auxi[100] ="";
-//    char auxi1[100]="";
-//    char auxi2[100]="";
+    char auxi[100] ="";
+    char auxi1[100]="";
+    char auxi2[100]="";
     for (int i = 0; i < 3; ++i) {
         params[i] = datos[i];
         if (params[i][0] == '%') {
@@ -1622,15 +1629,21 @@ UsrParams separarUsrParams(string datos[3]){
 //            strcpy(parametrosRetorno.pass, params[i].c_str());
         }
     }
-//    string param1 = retorno[0].substr(1, retorno[0].length() - 1);
-//    strcpy(auxi,param1.c_str());
-//    parametrosRetorno.group =auxi;
-//    string parami = retorno[1].substr(1, retorno[1].length() - 1);
-//    strcpy(auxi1,parami.c_str());
-//    parametrosRetorno.user =auxi1;
-//    string parami2 = retorno[2].substr(0, retorno[2].length());
-//    strcpy(auxi2,parami2.c_str());
-//    parametrosRetorno.pass =auxi2;
+    string param1 = retorno[0].substr(1, retorno[0].length() - 1);
+    strcpy(auxi,param1.c_str());
+    parametrosRetorno.group =auxi;
+    string parami = retorno[1].substr(1, retorno[1].length() - 1);
+    strcpy(auxi1,parami.c_str());
+    parametrosRetorno.user =auxi1;
+    string parami2 = retorno[2].substr(0, retorno[2].length());
+    strcpy(auxi2,parami2.c_str());
+    parametrosRetorno.pass =auxi2;
+//    active_sesion->id = sessionRespaldo.id;
+//    active_sesion->namePartition= sessionRespaldo.namePartition;
+//    active_sesion->path = sessionRespaldo.path;
+//    active_sesion->user=sessionRespaldo.user;
+//    active_sesion->idGrp=sessionRespaldo.idGrp;
+//    active_sesion->idUser=sessionRespaldo.idUser;
     return parametrosRetorno;
 }
 
@@ -2297,19 +2310,19 @@ LoginParams separarParamsLogin(string datos[3]) {
 }
 
 void loginn(char user[], char pass[], char id[]) {
-    active_sesion->user = user;
-    active_sesion->id = id;
+    strcpy(active_sesion->user , user);
+    strcpy(active_sesion->id , id);
     string activePathString = getPathDisk(id);
     char activePath[100];
     strcpy(activePath, activePathString.c_str());
-    active_sesion->path = activePath;
+    strcpy(active_sesion->path , activePath);
     string activeNameString = getNamePartition(id);
     char activeName[100];
     strcpy(activeName, activeNameString.c_str());
-    active_sesion->namePartition = activeName;
+    strcpy(active_sesion->namePartition , activeName);
     User *usr = getUser(user, active_sesion->path, active_sesion->namePartition);
-    active_sesion->idUser = &usr->id[0];
-    active_sesion->idGrp = &usr->group[0];
+    strcpy(active_sesion->idUser , &usr->id[0]);
+    strcpy(active_sesion->idGrp , &usr->group[0]);
     cout<<"inicio de sesion correcto"<<endl;
 }
 
