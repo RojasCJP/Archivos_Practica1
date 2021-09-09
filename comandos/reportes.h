@@ -1068,6 +1068,7 @@ void makeReports(string params[5]) {
         char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
         reportBitmap(0, paramsUtiles.id, pathreport);
+
     } else if (paramsUtiles.name == "bm_block") {
         char pathreport[paramsUtiles.path.size() + 1];
         strcpy(pathreport, paramsUtiles.path.c_str());
@@ -1082,4 +1083,3 @@ void makeReports(string params[5]) {
 }
 
 
-//todo hacer el reporte con los ebr y mostrarlos en el reporte de disco

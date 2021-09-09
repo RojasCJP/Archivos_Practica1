@@ -47,22 +47,22 @@ char* substr(char* arr, int begin, int len)
 }
 
 int main() {
-//    char entrada[150];
-//    while (entrada != "exit"){
-//        cout<<"ingrese el comando que desea ejecutar"<<endl;
-//        cin.getline(entrada,250);
-//        string entradaAnalizar;
-//        if(entrada[0]== 'e' && entrada[1] =='x'&& entrada[2] =='e' && entrada[3] == 'c'){
-//            entradaAnalizar = substr(entrada,5,100);
-//            cout<<entradaAnalizar<<endl;
-//            leerArchivo(entradaAnalizar);
-//            break;
-//        }else{
-//            cout<<entrada<<endl;
-//            leerEntrada(entrada);
-//        }
-//    }
-    leerArchivo("/entrada.txt");
+    char entrada[150];
+    while (entrada != "exit"){
+        cout<<"ingrese el comando que desea ejecutar"<<endl;
+        cin.getline(entrada,250);
+        string entradaAnalizar;
+        if(entrada[0]== 'e' && entrada[1] =='x'&& entrada[2] =='e' && entrada[3] == 'c'){
+            entradaAnalizar = substr(entrada,5,100);
+            cout<<entradaAnalizar<<endl;
+            leerArchivo(entradaAnalizar);
+            break;
+        }else{
+            cout<<entrada<<endl;
+            leerEntrada(entrada);
+        }
+    }
+//    leerArchivo("/entrada.txt");
 //    leerEntrada("fdisk –size=30 -u=k –path=/discoPrueba1.disk –name=Particion1");
 //    string entrada[4] = {"100", "k", "/discoPrueba1.disk", "ff"};
 //    string entrada1[8] = {"30", "k", "/discoPrueba1.disk", "p", "ff", "", "#partition", ""};
@@ -119,7 +119,3 @@ void leerEntrada(string entrada) {
     }
 }
 
-//todo para hacer la ejecucion de comandos directos, lo unico que tengo que hacer es cambiar el string entrada en el leer entrada, tengo que poner un cin
-// todo tengo que hacer prubas de add en las particiones, principalmente si no cabe, o hay que reposicionar
-//todo tengo que hacer el mkdir, meterlo en la gramatica, el metodo es writedir
-//todo tengo que hacer el touch, aunque creo que voy a tener que tunear esa onda
